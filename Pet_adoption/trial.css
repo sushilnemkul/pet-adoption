@@ -187,6 +187,31 @@ margin-bottom: 100px;
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
 }
+
+.image1 img{
+  height: 39vh;
+  width: 100%;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+.btn2{
+  text-align: center;
+  margin-bottom: 30px;
+  cursor: pointer;
+  
+  border: none;
+  border-radius: 20px;
+  padding: 1px;
+  width: 200px;
+  display: block;
+  margin: auto;
+}
+.pname1{
+  text-align: center;
+  cursor: pointer;
+  font-size: 70%;
+  height: 100px;
+}
 .pname{
   text-align: center;
   cursor: pointer;
@@ -195,6 +220,7 @@ margin-bottom: 100px;
   text-align: center;
   margin-bottom: 30px;
   cursor: pointer;
+  font-size: 20px;
 }
 .btn1{
   text-align: center;
@@ -208,58 +234,116 @@ margin-bottom: 100px;
   display: block;
   margin: auto;
 }
+
+
+.btn1  button{
+  background-color: #00f0b0;
+  border:#000;
+  color: #000;
+ 
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+
+}
 .btn1 button:hover{
   background-color: #f8f4f4;
   transition: 0.3s ease;
 }
+.btn2  button{
+  background-color: #00f0b0;
+  border:#000;
+  color: #000;
+ width: 100%;
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
 
-/* Login page CSS */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+}
+.btn2 button:hover{
+  background-color: #f8f4f4;
+  transition: 0.3s ease;
 }
 
-.login-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
+/* cats and dog list */
+.pets2{
+  text-align: center;
+  font-size: 50px;
+  padding-top: 100px;
+  color:#4CAF50; 
+  font-family: sans-serif;
+  position: relative;
+  top: 28px;
+  padding-bottom: 10px;
+}
+.main2{
+  margin-left: 200px;
+  display: inline;
 }
 
-h1 {
-    margin-bottom: 20px;
+.cards2{
+  width: 15%;
+  background-color: rgb(129, 119, 119);
+border-radius: 20px;
+  margin:20px;
+
+ margin-top: 20px;
+ display: inline-block;
+margin-bottom: 100px;
+}
+.cards2:hover{
+  transform: scale(1.1);
+  box-shadow: 2px 2px 20px black;
 }
 
-label {
-    display: block;
-    margin-bottom: 5px;
+.image2 img{
+  width: 100%;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
 }
 
-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    margin-bottom: 10px;
+
+
+.pname2{
+  text-align: center;
+  cursor: pointer;
+}
+.des2{
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  font-size: 20px;
+}
+.btn12{
+  text-align: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+
+  border: none;
+  border-radius: 20px;
+  padding: 1px;
+  width: 200px;
+  display: block;
+  margin: auto;
 }
 
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
+.btn12 button{
+  background-color: #00f0b0;
+  border:#000;
+  color: #000;
+ 
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+
+}
+.btn12 button:hover{
+  background-color: #549e41;
+  transition: 0.3s ease;
 }
 
-a {
-    text-decoration: none;
-    color: #333;
-}
 

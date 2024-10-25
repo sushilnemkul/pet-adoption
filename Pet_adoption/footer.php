@@ -98,9 +98,9 @@ footer {
         </div>
         <div class="footer-contact">
             <h3>Contact Us</h3>
-            <p>Email: info@adoptabuddy.com</p>
-            <p>Phone: +123 456 7890</p>
-            <p>Address: 1234 Pet Street, Animal City, 56789</p>
+            <p>Email: namecoolsusil@gmail.com</p>
+            <p>Phone: +977 9843432401</p>
+            <p>Address: Siddhipur, Lalitpur, 46000</p>
         </div>
     </div>
     <div class="footer-bottom">

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adopt a Buddy</title>
 
-    <link rel="stylesheet" href="trial.css">
+    <link rel="stylesheet" type="text/css" href="trial.css">
 </head>
 <body>
      
@@ -15,7 +15,7 @@
              <div class="logo"><img src="logo.png" alt="adopt" width="125px"></div><style></style></h2>  
                <ul class="menu">
                 <li><a href="index.php">HOME</a></li>
-                <li><a href="#">ABOUT</a></li>
+                <li><a href="about.php">ABOUT</a></li>
              
                
 

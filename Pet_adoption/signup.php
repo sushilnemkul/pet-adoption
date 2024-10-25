@@ -48,14 +48,27 @@
 
         input[type="text"],
         input[type="email"],
-        input[type="password"],
-        input[type="tel"] {
+        input[type="password"]
+         {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
+        .signup-container form select{
+            width: 100%;
+            padding:10px 15px;
+            font-size: 17px;
+            margin:8px 0;
+            background:#eee;
+            border-radius: 5px;
+        }
+I
+        .form-container form select option{
+            background: #fff;
+            }
 
         input[type="submit"] {
             width: 100%;
@@ -101,14 +114,16 @@
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
 
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" placeholder="1234567890">
+            <select name="user_type">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+                </select>
 
             <input type="submit" value="Create Account">
         </form>
 
         <div class="login-link">
-            Already have an account? <a href="login.html">Login</a>
+            Already have an account? <a href="login.php">Login</a>
         </div>
     </div>
 
@@ -118,3 +133,25 @@
 
 <!-- </body>
 </html> -->
+<?php
+
+// Database configuration
+$servername = "localhost";
+$username = "root"; // Database username (usually "root" for local development)
+$password = ""; // Database password
+$dbname = "project"; // Your database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  
+}
+?>
+
+
