@@ -8,7 +8,7 @@
               So, consider adopting and be a hero for those who need it most</p>
 
             <button class="cn"><a href="#">ADOPT A BUDDY</a></button>
-        </div><br><br><br><br>
+        </div>
         <h1 class="pets">Pets Available For Adoption ></h1>
         <div class="main">
        

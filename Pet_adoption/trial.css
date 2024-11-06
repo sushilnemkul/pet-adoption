@@ -156,11 +156,11 @@ background-color: #fff;
 .pets{
   text-align: center;
   font-size: 50px;
-  padding-top: 20px;
+  padding-top: 250px;
   color:#4CAF50; 
   font-family: sans-serif;
   position: relative;
-  top: 360px;
+  top: 370px;
 }
 .main{
   margin-left: 200px;
@@ -171,7 +171,7 @@ background-color: #fff;
   width: 15%;
   background-color: rgb(129, 119, 119);
 border-radius: 20px;
-  margin:20px;
+  margin:30px;
 
  margin-top: 400px;
  display: inline-block;

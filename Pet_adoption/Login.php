@@ -128,7 +128,7 @@ a {
 
     <div class="login-container">
         <h1>Login</h1>
-        <form>
+        <form action="login.php" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
 

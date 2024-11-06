@@ -1,19 +1,6 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up Form</title>
-    <link rel="stylesheet" href="trial.css">
-</head>
-<body> -->
+
     <?php include 'header.php'; ?>
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up | Adopt A Buddy</title>
+ 
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,7 +35,8 @@
 
         input[type="text"],
         input[type="email"],
-        input[type="password"]
+        input[type="password"],
+        input[type="Repeat-password"]
          {
             width: 100%;
             padding: 10px;
@@ -85,7 +73,7 @@ I
             background-color: #218838;
         }
 
-        .login-link {
+        .login-link { 
             text-align: center;
             margin-top: 15px;
         }
@@ -99,27 +87,29 @@ I
             text-decoration: underline;
         }
     </style>
-</head>
-<body>
+
 
     <div class="signup-container">
         <h2>Sign Up</h2>
-        <form action="signup_process.php" method="post">
+        <form action="signup.php" method="post">
             <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" placeholder="Enter your name">
 
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" placeholder="Email">
 
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" >
+
+            <label for="Repeat_password">Repeat-Password</label>
+            <input type="password" id="Repeat_password" name="Repeat_password" >
 
             <select name="user_type">
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
                 </select>
 
-            <input type="submit" value="Create Account">
+            <input type="submit" class="btn-submit" value="Create Account" name="submit">
         </form>
 
         <div class="login-link">
@@ -134,24 +124,57 @@ I
 <!-- </body>
 </html> -->
 <?php
+if(isset($_POST['submit'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $passwordRepeat = $_POST['Repeat_password'];
+    $user_type = $_POST['user_type'];
 
-// Database configuration
-$servername = "localhost";
-$username = "root"; // Database username (usually "root" for local development)
-$password = ""; // Database password
-$dbname = "project"; // Your database name
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+    $errors = array(); // Array to store error messages
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    // Validation
+    if(empty($name) || empty($email) || empty($password) || empty($passwordRepeat)) {
+        array_push($errors, "All fields are required.");
+    }
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        array_push($errors, "Email is not valid.");
+    }
+    if(strlen($password) < 4) {
+        array_push($errors, "Password must be at least 4 characters.");
+    }
+    if($password !== $passwordRepeat) {
+        array_push($errors, "Passwords do not match.");
+    }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  
+    // Display errors if any
+    if(count($errors) > 0) {
+        foreach($errors as $error) {
+            echo "<div class='alert'>$error</div>";
+        }
+    } else {
+        require_once "database.php";
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Insert user data
+        $sql = "INSERT INTO user1 (full_name, email, password, user_type) VALUES (?, ?, ?, ?)";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(mysqli_stmt_prepare($stmt, $sql)) {
+            mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $passwordHash, $user_type);
+            mysqli_stmt_execute($stmt);
+            echo "<div class='alert-success'>You are registered successfully.</div>";
+            mysqli_stmt_close($stmt); // Close the statement
+        } else {
+            echo "Error: " . mysqli_error($conn);
+        }
+
+        mysqli_close($conn); // Close the connection
+    }
 }
 ?>
-
-
