@@ -86,11 +86,93 @@ I
         .login-link a:hover {
             text-decoration: underline;
         }
+
+ 
     </style>
 
 
     <div class="signup-container">
         <h2>Sign Up</h2>
+
+        <?Php
+//creating database connection in php
+$host = "localhost"; //host name
+$user = "root"; //mysql username or db user 
+$password = ""; // according to your database 
+//if u are using xampp mysql then put password blank 
+$db_name = "project"; //database name
+
+//creating connection in procedure oriented
+$con = mysqli_connect($host, $user, $password, $db_name);
+
+if($con){
+    echo "connection successful";
+    if(isset($_POST['submit'])){
+    //inserting data into database table
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $passwordRepeat = $_POST['Repeat_password'];
+    $usertype = $_POST['user_type'];
+
+    $errors = array();
+
+     // Basic validation
+     if (empty($name) || empty($email) || empty($password) || empty($passwordRepeat)) {
+        $errors[] = "All fields are required.";
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Invalid email format.";
+    }
+    if (strlen($password) < 8) {
+        $errors[] = "Password must be at least 8 characters.";
+    }
+    if ($password !== $passwordRepeat) {
+        $errors[] = "Passwords do not match.";
+    }
+
+    // Display errors if any
+    if (count($errors) > 0) {
+        foreach ($errors as $error) {
+            echo "<div class='alert alert-danger'>$error</div>";
+        }
+    } else {
+        // Hash the password for security
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+        // Database connection
+        require_once "database.php"; // Make sure this file contains $conn
+
+        // SQL query to insert data
+        $sql = "INSERT INTO users (name, email, password, usertype) VALUES (?, ?, ?, ?)";
+        $stmt = mysqli_stmt_init($conn);
+
+        if (mysqli_stmt_prepare($stmt, $sql)) {
+            // Bind parameters
+            mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $passwordHash, $usertype);
+
+            // Execute statement
+            if (mysqli_stmt_execute($stmt)) {
+                echo "<div class='alert alert-success'>Your account has been created successfully!</div>";
+            } else {
+                echo "<div class='alert alert-danger'>Something went wrong. Please try again.</div>";
+            }
+
+            // Close the statement
+            mysqli_stmt_close($stmt);
+        } else {
+            echo "<div class='alert alert-danger'>Database error. Could not prepare statement.</div>";
+        }
+
+        // Close the database connection
+        mysqli_close($conn);
+    }
+}
+}
+   
+?>
+
+
         <form action="signup.php" method="post">
             <label for="name">Full Name</label>
             <input type="text" id="name" name="name" placeholder="Enter your name">
@@ -121,60 +203,4 @@ I
 </html>
 
 
-<!-- </body>
-</html> -->
-<?php
-if(isset($_POST['submit'])) {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $passwordRepeat = $_POST['Repeat_password'];
-    $user_type = $_POST['user_type'];
 
-    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-
-    $errors = array(); // Array to store error messages
-
-    // Validation
-    if(empty($name) || empty($email) || empty($password) || empty($passwordRepeat)) {
-        array_push($errors, "All fields are required.");
-    }
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        array_push($errors, "Email is not valid.");
-    }
-    if(strlen($password) < 4) {
-        array_push($errors, "Password must be at least 4 characters.");
-    }
-    if($password !== $passwordRepeat) {
-        array_push($errors, "Passwords do not match.");
-    }
-
-    // Display errors if any
-    if(count($errors) > 0) {
-        foreach($errors as $error) {
-            echo "<div class='alert'>$error</div>";
-        }
-    } else {
-        require_once "database.php";
-
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        // Insert user data
-        $sql = "INSERT INTO user1 (full_name, email, password, user_type) VALUES (?, ?, ?, ?)";
-        $stmt = mysqli_stmt_init($conn);
-
-        if(mysqli_stmt_prepare($stmt, $sql)) {
-            mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $passwordHash, $user_type);
-            mysqli_stmt_execute($stmt);
-            echo "<div class='alert-success'>You are registered successfully.</div>";
-            mysqli_stmt_close($stmt); // Close the statement
-        } else {
-            echo "Error: " . mysqli_error($conn);
-        }
-
-        mysqli_close($conn); // Close the connection
-    }
-}
-?>
