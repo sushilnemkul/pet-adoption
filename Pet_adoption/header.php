@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +15,7 @@
         <div class="navbar">
              <div class="logo"><img src="logo.png" alt="adopt" width="125px"></div><style></style></h2>  
                <ul class="menu">
-                <li><a href="index.php">HOME</a></li>
+                <li><a href="indexx.php">HOME</a></li>
                 <li><a href="about.php">ABOUT</a></li>
              
                

@@ -1,4 +1,15 @@
+
+
 <?php include 'header.php'; ?>
+<?php
+session_start();
+if(!isset($_SESSION['user'])){
+  header("Location: Login.php");//redirects to login.php if not logged in
+  exit();
+}
+
+?>
+
 <div class="background">  
         <br><br><br><br><br><br><br><br><br><br><br>
         <div class="content"><br><br><br><br><br><br>
@@ -7,7 +18,7 @@
               <br>the unconditional love and joy that only a pet can bring.<br> 
               So, consider adopting and be a hero for those who need it most</p>
 
-            <button class="cn"><a href="#">ADOPT A BUDDY</a></button>
+            <button class="cn" id="adoptButton"><a href="#">ADOPT A BUDDY</a></button>
         </div>
         <h1 class="pets">Pets Available For Adoption ></h1>
         <div class="main">
@@ -24,7 +35,7 @@
           </div>
           <div class="btn1">
             <button><a href="#">Details</a></button>
-            <button ><a href="#">Adopt</a></button>
+            <button id="adoptButton"><a href="#">Adopt</a></button>
             
           </div>
 
@@ -43,7 +54,7 @@
           </div>
           <div class="btn1">
             <button><a href="#">Details</a></button>
-            <button ><a href="#">Adopt</a></button>
+            <button id="adoptButton" ><a href="#">Adopt</a></button>
             
           </div>
 
@@ -61,7 +72,7 @@
         </div>
         <div class="btn1">
           <button><a href="#">Details</a></button>
-          <button ><a href="#">Adopt</a></button>
+          <button id="adoptButton" ><a href="#">Adopt</a></button>
           
         </div>
       </div>  
@@ -74,7 +85,11 @@
         </div>
           <div class="btn2">
             <!-- <button><a href="option.php">Find more </a></button> -->
-            <button id="findMoreBtn" class="btn">Find more</button>
+            <button id="adoptButton" class="btn">Find more</button>
+
+          <a href="logout.php">Logout</a>
+
+            <script src="scriptt.js" class="btn"></script>
             <style>
              
 /* Main page styles */

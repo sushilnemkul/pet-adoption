@@ -1,6 +1,15 @@
 
     <?php include 'header.php'; ?>
- 
+    <?php
+    
+    if(isset($_SESSION['user'])){
+      header("Location: indexx.php");//redirects to login.php if not logged in
+      exit();
+    }
+    
+    
+    ?>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -87,6 +96,11 @@ I
             text-decoration: underline;
         }
 
+        span{
+    color: #ff0000;
+    font-size: 1.5rem/2;
+    font-weight: 300;
+}
  
     </style>
 
@@ -95,25 +109,14 @@ I
         <h2>Sign Up</h2>
 
         <?Php
-//creating database connection in php
-$host = "localhost"; //host name
-$user = "root"; //mysql username or db user 
-$password = ""; // according to your database 
-//if u are using xampp mysql then put password blank 
-$db_name = "project"; //database name
-
-//creating connection in procedure oriented
-$con = mysqli_connect($host, $user, $password, $db_name);
-
-if($con){
-    echo "connection successful";
     if(isset($_POST['submit'])){
     //inserting data into database table
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $passwordRepeat = $_POST['Repeat_password'];
-    $usertype = $_POST['user_type'];
+    $passwordRepeat = $_POST['repeat_password'];
+    $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+
 
     $errors = array();
 
@@ -131,6 +134,14 @@ if($con){
         $errors[] = "Passwords do not match.";
     }
 
+    require_once "database.php"; // Make sure this file contains $conn
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $result = mysqli_query($conn, $sql);
+    $rowcount = mysqli_num_rows($result);
+    if ($rowcount > 0) {
+        array_push($errors, "Email already exists.");
+    }
+
     // Display errors if any
     if (count($errors) > 0) {
         foreach ($errors as $error) {
@@ -138,22 +149,24 @@ if($con){
         }
     } else {
         // Hash the password for security
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+      
 
         // Database connection
-        require_once "database.php"; // Make sure this file contains $conn
+       
 
         // SQL query to insert data
-        $sql = "INSERT INTO users (name, email, password, usertype) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
         $stmt = mysqli_stmt_init($conn);
 
         if (mysqli_stmt_prepare($stmt, $sql)) {
             // Bind parameters
-            mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $passwordHash, $usertype);
+            mysqli_stmt_bind_param($stmt, "sss", $name, $email, $passwordHash);
 
             // Execute statement
             if (mysqli_stmt_execute($stmt)) {
                 echo "<div class='alert alert-success'>Your account has been created successfully!</div>";
+                echo "<script>window.location.href = 'login.php';</script>"; 
+                exit();
             } else {
                 echo "<div class='alert alert-danger'>Something went wrong. Please try again.</div>";
             }
@@ -168,37 +181,37 @@ if($con){
         mysqli_close($conn);
     }
 }
-}
+
    
 ?>
 
 
-        <form action="signup.php" method="post">
+        <form action="signup.php" method="post" id="adoptionForm">
             <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" placeholder="Enter your name">
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            <span id="error_full_name"></span>
 
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Email">
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <span id="error_email"></span>
 
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" >
+            <input type="password" id="password" name="password" required >
+            <span id="error_password"></span>
 
             <label for="Repeat_password">Repeat-Password</label>
-            <input type="password" id="Repeat_password" name="Repeat_password" >
+            <input type="password" id="repeat_password" name="repeat_password" >
+            <span id="error_repeat_password"></span>
+      
 
-            <select name="user_type">
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-                </select>
-
-            <input type="submit" class="btn-submit" value="Create Account" name="submit">
+            <input type="submit" class="btn-submit" value="Create Account" id = "submit" name="submit">
         </form>
 
         <div class="login-link">
             Already have an account? <a href="login.php">Login</a>
         </div>
     </div>
-
+    <!-- <script src="script.js"></script> -->
 </body>
 </html>
 

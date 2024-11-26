@@ -90,8 +90,8 @@ body {
             <p>Responsible for ideation and research, writing code for this Adoption page, writing and designing the UI.</p>
            <div class="btnn">
             <button><a href="https://www.linkedin.com/in/sushil-nemkul-7868b2261/">Linkedin</a></button>
-        <button ><a href="https://github.com/sushilnemkul">Github</a></button>
-        <button><a href="https://github.com/sushilnemkul/pet-adoption">Website</a></button>
+        <button ><a href="https://github.com/sushilnemkul/pet-adoption">Github</a></button>
+        <button><a href="https://sushilnemkul.com.np/">Website</a></button>
         </div>
         </div>
     </div>

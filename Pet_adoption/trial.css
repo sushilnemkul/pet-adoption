@@ -156,11 +156,11 @@ background-color: #fff;
 .pets{
   text-align: center;
   font-size: 50px;
-  padding-top: 250px;
+  padding-top: 10px;
   color:#4CAF50; 
   font-family: sans-serif;
   position: relative;
-  top: 370px;
+  top: 320px;
 }
 .main{
   margin-left: 200px;
@@ -279,7 +279,7 @@ margin-bottom: 100px;
   padding-bottom: 10px;
 }
 .main2{
-  margin-left: 200px;
+  margin-left: 90px;
   display: inline;
 }
 
@@ -334,10 +334,10 @@ margin-bottom: 100px;
   background-color: #00f0b0;
   border:#000;
   color: #000;
- 
-  font-size: 18px;
+ align-items: center;
+  font-size: 15px;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
 
 }

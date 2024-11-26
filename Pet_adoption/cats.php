@@ -16,7 +16,7 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button ><a href="#">Adopt</a></button>
+        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
         
       </div>
    </div>
@@ -33,7 +33,7 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button ><a href="#">Adopt</a></button>
+        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
         
       </div>
    </div>
@@ -50,7 +50,7 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button ><a href="#">Adopt</a></button>
+        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
         
       </div>
    </div>
@@ -67,7 +67,7 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button ><a href="#">Adopt</a></button>
+        <button class="adopt-Button" id="adoptButton" ><a href="#">Adopt</a></button>
         
       </div>
    </div>
@@ -84,7 +84,7 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button ><a href="#">Adopt</a></button>
+        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
         
       </div>
    </div>
@@ -100,7 +100,7 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button ><a href="#">Adopt</a></button>
+        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
         
       </div>
    </div>
@@ -117,7 +117,7 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button ><a href="#">Adopt</a></button>
+        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
         
       </div>
    </div>
@@ -134,7 +134,7 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button ><a href="#">Adopt</a></button>
+        <button class="adopt-Button" id="adoptButton">Adopt</button>
         
       </div>
    </div>
@@ -151,7 +151,7 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button ><a href="#">Adopt</a></button>
+        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
         
       </div>
    </div>
@@ -168,12 +168,12 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button ><a href="#">Adopt</a></button>
+        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
         
       </div>
    </div>
    </div>
-              
+   <script src="scriptt.js"></script>           
 <?php include 'footer.php';?>
 
 
