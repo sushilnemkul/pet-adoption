@@ -83,7 +83,7 @@ body {
     <!-- Add card -->
     <div class="container">
         <div class="team-member" id="sushil">
-            <img src="sushil.jpg" alt="Sushil Nemkul">
+            <img src="img/sushil.jpg" alt="Sushil Nemkul">
             <h2>Sushil Nemkul</h2>
             <p><strong>Location: </strong>Siddhipur, Lalitpur</p>
             <p>Research, Coding, Design and Development</p>

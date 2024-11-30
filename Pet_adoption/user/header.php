@@ -13,7 +13,7 @@
      
     
         <div class="navbar">
-             <div class="logo"><img src="logo.png" alt="adopt" width="125px"></div><style></style></h2>  
+             <div class="logo"><img src="img/logo.png" alt="adopt" width="125px"></div><style></style></h2>  
                <ul class="menu">
                 <li><a href="indexx.php">HOME</a></li>
                 <li><a href="about.php">ABOUT</a></li>

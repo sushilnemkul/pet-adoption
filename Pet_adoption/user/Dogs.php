@@ -1,12 +1,20 @@
 
-   <?php include 'header.php';?>
+<?php include 'header.php';?>
+<?php
+session_start();
+if(!isset($_SESSION['user'])){
+  header("Location: Login.php");//redirects to login.php if not logged in
+  exit();
+}
+
+?>
    
-   <h1 class="pets2">CATS</h1>
+   <h1 class="pets2">DOGS</h1>
    <div class="main2">
 
    <div class="cards2">
       <div class="image2">
-           <a href="#"><img src="ct1.jpg.webp" alt="luna"></a>
+           <a href="#"><img src="img/dg1.jpg.webp" alt="luna"></a>
       </div>
       <div class="pname2">
          <h1>Luna</h1>
@@ -16,14 +24,14 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
+        <button ><a href="#">Adopt</a></button>
         
       </div>
    </div>
       
    <div class="cards2">
       <div class="image2">
-           <a href="#"><img src="ct4.jpg.webp" alt="luna"></a>
+           <a href="#"><img src="img/dg2.jpg.webp" alt="luna"></a>
       </div>
       <div class="pname2">
          <h1>Luna</h1>
@@ -33,14 +41,14 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
+        <button ><a href="#">Adopt</a></button>
         
       </div>
    </div>
 
    <div class="cards2">
       <div class="image2">
-           <a href="#"><img src="ct5.jpg.webp" alt="luna"></a>
+           <a href="#"><img src="img/dg3.jpg.webp" alt="luna"></a>
       </div>
       <div class="pname2">
          <h1>Luna</h1>
@@ -50,14 +58,14 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
+        <button ><a href="#">Adopt</a></button>
         
       </div>
    </div>
 
    <div class="cards2">
       <div class="image2">
-           <a href="#"><img src="ct7.jpg.webp" alt="luna"></a>
+           <a href="#"><img src="img/dg4.jpg.webp" alt="luna"></a>
       </div>
       <div class="pname2">
          <h1>Luna</h1>
@@ -67,14 +75,14 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button class="adopt-Button" id="adoptButton" ><a href="#">Adopt</a></button>
+        <button ><a href="#">Adopt</a></button>
         
       </div>
    </div>
 
    <div class="cards2">
       <div class="image2">
-           <a href="#"><img src="ct8.jpg.webp" alt="luna"></a>
+           <a href="#"><img src="img/dg6.jpg.webp" alt="luna"></a>
       </div>
       <div class="pname2">
          <h1>Luna</h1>
@@ -84,13 +92,13 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
+        <button ><a href="#">Adopt</a></button>
         
       </div>
    </div>
    <div class="cards2">
       <div class="image2">
-           <a href="#"><img src="4.png" alt="luna"></a>
+           <a href="#"><img src="img/Stevie.jpg" alt="luna"></a>
       </div>
       <div class="pname2">
          <h1>Luna</h1>
@@ -100,14 +108,14 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
+        <button ><a href="#">Adopt</a></button>
         
       </div>
    </div>
 
    <div class="cards2">
       <div class="image2">
-           <a href="#"><img src="3.png" alt="luna"></a>
+           <a href="#"><img src="img/Rozzo.jpg" alt="luna"></a>
       </div>
       <div class="pname2">
          <h1>Luna</h1>
@@ -117,14 +125,14 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
+        <button ><a href="#">Adopt</a></button>
         
       </div>
    </div>
 
    <div class="cards2">
       <div class="image2">
-           <a href="#"><img src="2.png" alt="luna"></a>
+           <a href="#"><img src="img/Meesa.jpg" alt="luna"></a>
       </div>
       <div class="pname2">
          <h1>Luna</h1>
@@ -134,14 +142,14 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button class="adopt-Button" id="adoptButton">Adopt</button>
+        <button ><a href="#">Adopt</a></button>
         
       </div>
    </div>
 
    <div class="cards2">
       <div class="image2">
-           <a href="#"><img src="1.png" alt="luna"></a>
+           <a href="#"><img src="img/munch.jpg" alt="luna"></a>
       </div>
       <div class="pname2">
          <h1>Luna</h1>
@@ -151,14 +159,14 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
+        <button ><a href="#">Adopt</a></button>
         
       </div>
    </div>
 
    <div class="cards2">
       <div class="image2">
-           <a href="#"><img src="5.png" alt="luna"></a>
+           <a href="#"><img src="img/Orion.jpg" alt="luna"></a>
       </div>
       <div class="pname2">
          <h1>Luna</h1>
@@ -168,12 +176,12 @@
       </div>
       <div class="btn12">
         <button><a href="#">Details</a></button>
-        <button class="adopt-Button" id="adoptButton"><a href="#">Adopt</a></button>
+        <button ><a href="#">Adopt</a></button>
         
       </div>
    </div>
    </div>
-   <script src="scriptt.js"></script>           
+              
 <?php include 'footer.php';?>
 
 

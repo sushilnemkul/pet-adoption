@@ -25,7 +25,7 @@ if(!isset($_SESSION['user'])){
        
         <div class="cards">
           <div class="image">
-               <a href="#"><img src="dg6.jpg.webp" alt="luna"></a>
+               <a href="#"><img src="img/dg6.jpg.webp" alt="luna"></a>
           </div>
           <div class="pname">
              <h1>Luna</h1>
@@ -44,7 +44,7 @@ if(!isset($_SESSION['user'])){
         </div>
         <div class="cards">
           <div class="image">
-               <a href="#"><img src="dg2.jpg.webp" alt="luna"></a>
+               <a href="#"><img src="img/dg2.jpg.webp" alt="luna"></a>
           </div>
           <div class="pname">
              <h1>Simba</h1>
@@ -62,7 +62,7 @@ if(!isset($_SESSION['user'])){
        </div>
        <div class="cards">
         <div class="image">
-             <a href="#"><img src="ct4.jpg.webp" alt="luna"></a>
+             <a href="#"><img src="img/ct4.jpg.webp" alt="luna"></a>
         </div>
         <div class="pname">
            <h1>Sweety</h1>
@@ -78,7 +78,7 @@ if(!isset($_SESSION['user'])){
       </div>  
       <div class="cards">
           <div class="image1">
-               <a href="#"><img src="more.jpg" alt="luna"></a>
+               <a href="#"><img src="img/more.jpg" alt="luna"></a>
           </div>
           <div class="pname1">
            <h1>More pets available<br> for adoption</h1>
@@ -87,7 +87,7 @@ if(!isset($_SESSION['user'])){
             <!-- <button><a href="option.php">Find more </a></button> -->
             <button id="adoptButton" class="btn">Find more</button>
 
-          <a href="logout.php">Logout</a>
+        
 
             <script src="scriptt.js" class="btn"></script>
             <style>
@@ -204,6 +204,7 @@ window.onclick = function(event) {
     </script>
           </div> 
        </div>
+       <button> <a href="logout.php">Logout</a></button>
        <?php include 'footer.php'; ?>  
        </div>
        
