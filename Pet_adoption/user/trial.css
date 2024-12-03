@@ -7,9 +7,10 @@
   .background{
     width: 100%;
     height:120vh;
-    background-image:linear-gradient(rgba(0,0,0,0.60),rgba(0,0,0,0.40)),url(img/background.jpg);
+    background-image:linear-gradient(rgba(0,0,0,0.40),rgba(0,0,0,0.40)),url(img/background.jpg);
     background-size: cover;
     background-position: fixed;
+    background-color: f7e7ce;
   }
   .navbar{
     
@@ -160,11 +161,12 @@ background-color: #fff;
   color:#4CAF50; 
   font-family: sans-serif;
   position: relative;
-  top: 320px;
+  top: 360px;
 }
 .main{
   margin-left: 200px;
   display: inline;
+  
 }
 
 .cards{
@@ -247,6 +249,9 @@ margin-bottom: 100px;
   cursor: pointer;
 
 }
+.btn1 a{
+  text-decoration: none;
+}
 .btn1 button:hover{
   background-color: #f8f4f4;
   transition: 0.3s ease;
@@ -262,6 +267,9 @@ margin-bottom: 100px;
   cursor: pointer;
 
 }
+.btn2 a{
+  text-decoration: none;
+}
 .btn2 button:hover{
   background-color: #f8f4f4;
   transition: 0.3s ease;
@@ -271,16 +279,18 @@ margin-bottom: 100px;
 .pets2{
   text-align: center;
   font-size: 50px;
-  padding-top: 100px;
+  padding-top: 120px;
   color:#4CAF50; 
   font-family: sans-serif;
   position: relative;
-  top: 28px;
+  
   padding-bottom: 10px;
+   background-color:#f7e7ce ;
 }
 .main2{
-  margin-left: 90px;
+  padding-left: 100px;
   display: inline;
+  background-color:#f7e7ce ;
 }
 
 .cards2{
@@ -329,6 +339,9 @@ margin-bottom: 100px;
   display: block;
   margin: auto;
 }
+.btn12 a{
+  text-decoration: none;
+}
 
 .btn12 button{
   background-color: #00f0b0;
@@ -346,4 +359,40 @@ margin-bottom: 100px;
   transition: 0.3s ease;
 }
 
+/* css for login and logout button of header */
+.logout{
+  background: #00f0b0;
+  /* color: #fff; */
+  padding: 0.5rem 0.8rem;
+  border-radius: 2rem;
+  text-align: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-top: 1.2rem;
+  text-decoration: none;
+}
+.logout:hover{
+  background: rgb(116, 107, 107);
+}
+.logout a{
+  text-decoration: none;
+  
+}
 
+.login{
+  background: #00f0b0;
+  color: #fff;
+  padding: 0.5rem 0rem;
+  border-radius: 2rem;
+  text-align: center;
+  cursor: pointer;
+  font-size: 1.7rem;
+
+}
+.login:hover{
+  background: black;
+}
+.login a{
+  text-decoration: none;
+  color: #fff;
+}

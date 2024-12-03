@@ -1,14 +1,12 @@
 
 <?php include 'header.php';?>
 <?php
-session_start();
+
 if(!isset($_SESSION['user'])){
   header("Location: Login.php");//redirects to login.php if not logged in
   exit();
 }
-
-?>
-   
+?> 
    <h1 class="pets2">DOGS</h1>
    <div class="main2">
 

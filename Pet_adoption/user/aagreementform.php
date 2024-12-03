@@ -85,6 +85,8 @@ body {
     <label for="Pet_ID">Pet ID:</label>
     <input type="text" id="Pet_ID" name="Pet_ID" placeholder="Pet ID" required>
 
+    
+
     <input type="submit" class="btn-submit" value="Submit" name="submit">
 </form>
 

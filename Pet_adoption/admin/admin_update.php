@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if(!isset($_SESSION['admin'])){
+    header("Location: ../user/Login.php");//redirects to login.php if not logged in
+    exit();
+  }
 @include 'config.php';
 
 
@@ -32,6 +38,8 @@ if (isset($_POST['update_pet'])) {
         $upload = mysqli_query($conn, $update);
         if ($upload) {
             move_uploaded_file($pet_image_tmp_name, $pet_image_folder);
+            $message[] = '<script>alert("Pet updated successfully")</script>';
+            header('location:admin_page.php');
         } else {
             $message[] = '<script>alert("Failed to add pet")</script>';
         }
@@ -73,7 +81,7 @@ if (isset($_POST['update_pet'])) {
 
             ?>
 
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>?edit=<?php echo $id; ?>" method="post" enctype="multipart/form-data">
                     <h3>Update pet info pets</h3>
                     <input type="text" name="pet_name" placeholder="Name of pet" value="<?php echo $row['pet_name']; ?>" class="box">
                     <input type="double" name="pet_age" placeholder="Age of pet" value="<?php echo $row['pet_age']; ?>" class="box">

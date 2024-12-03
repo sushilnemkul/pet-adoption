@@ -2,11 +2,6 @@
 
 <?php include 'header.php'; ?>
 <?php
-session_start();
-if(!isset($_SESSION['user'])){
-  header("Location: Login.php");//redirects to login.php if not logged in
-  exit();
-}
 
 ?>
 
@@ -85,7 +80,7 @@ if(!isset($_SESSION['user'])){
         </div>
           <div class="btn2">
             <!-- <button><a href="option.php">Find more </a></button> -->
-            <button id="adoptButton" class="btn">Find more</button>
+            <button id="adoptButton" class="btn"><a href="animal.php">Find more</a></button>
 
         
 
@@ -95,6 +90,7 @@ if(!isset($_SESSION['user'])){
 /* Main page styles */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f7e7ce;
 }
 
 .pet-card {
@@ -156,6 +152,8 @@ body {
 }
 
 
+
+
             </style>
             <div id="popup" class="popup">
         <div class="popup-content">
@@ -165,46 +163,12 @@ body {
             <button id="catBtn" class="popup-btn">Cat</button>
         </div>
     </div>
-    <script>
-      // Get elements
-const findMoreBtn = document.getElementById('findMoreBtn');
-const popup = document.getElementById('popup');
-const closeBtn = document.querySelector('.close');
-const dogBtn = document.getElementById('dogBtn');
-const catBtn = document.getElementById('catBtn');
-
-// Open popup when "Find more" button is clicked
-findMoreBtn.onclick = function() {
-    popup.style.display = 'block';
-}
-
-// Close popup when 'X' is clicked
-closeBtn.onclick = function() {
-    popup.style.display = 'none';
-}
-
-// Handle Dog selection
-dogBtn.onclick = function() {
- window.location.href = 'Dogs.php';
-}
-
-// Handle Cat selection
-catBtn.onclick = function() {
- window.location.href = 'cats.php';
-}
-
-// Close popup if user clicks outside of the popup content
-window.onclick = function(event) {
-    if (event.target == popup) {
-        popup.style.display = 'none';
-    }
-}
+    
 
 
-    </script>
           </div> 
        </div>
-       <button> <a href="logout.php">Logout</a></button>
+      
        <?php include 'footer.php'; ?>  
        </div>
        

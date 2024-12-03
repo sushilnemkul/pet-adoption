@@ -1,7 +1,7 @@
 
    <?php include 'header.php';?>
    <?php
-session_start();
+
 if(!isset($_SESSION['user'])){
   header("Location: Login.php");//redirects to login.php if not logged in
   exit();

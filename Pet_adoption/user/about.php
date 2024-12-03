@@ -2,7 +2,7 @@
 <style>
 body {
     
-    background-color: #eae1df; /* beige */
+    background-color: #f7e7ce; /* beige */
     margin: 0;
    
   }

@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +26,15 @@
 
                 <li><a href="#">How To Help</a></li>    
               <li><a href="#">Contact Us</a></li>
-              <button class="btn"><a href="Login.php">SIGN IN</a></button>
-              </ul>
-              </ul> 
+          <!-- Change button based on session status -->
+          <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] === "true") { ?>
+   <div class="logout"><li><a id="logout" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a></li></div>
+
+<?php } else { ?>
+   <div class="login"> <li><a id="login" href="../user/Login.php"> <i class="fa fa-sign-in"></i>Login</a></li></div>
+<?php } ?>
+
+              
           </div>
+</body>
+</html>

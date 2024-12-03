@@ -11,6 +11,90 @@ html{
     font-size: 60.5%;
     overflow-x: hidden;
 }
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: "Roboto" sans-serif;
+    box-sizing: border-box;
+  }
+ 
+  .navbar{
+    
+    width: 100%;
+    height: 100px;
+    background-color: wheat;
+   padding-right: 30px;
+    display:flex;
+   opacity: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999; /* Ensure it's above other content */
+  
+  }
+  .logo{
+    padding-left: 100px;
+    font-size: 0px;
+    font-weight: bold;
+  position: relative;
+
+  }
+  .menu{
+    align-items: center;
+    width:100%;
+    display: flex;
+    justify-content: right;
+    list-style: none;
+    background: 8c52ff;
+  }
+
+  .menu :hover{
+    color: red;
+  }
+  
+  .menu li{
+    margin-left: 5px;
+    font-weight: bold;
+    text-align: left;
+    display: inline-block;
+    position: relative;
+    width: 150px;
+    margin: 2px;
+    padding: 2px;
+  }
+  
+  
+  .menu li a{
+    display: block;
+    padding: 5px 5px;
+    color: #020202;
+    font-size: 15px;
+    text-align: center;
+    text-decoration: none;
+        
+  }
+  
+  .menu li ul.dropdown li{
+   display: block;
+   text-align: center;
+   background-color: #faf7f7;
+   padding: 5px;
+   transition: 0.3s;
+  }
+
+  
+ 
+ 
+  
+  
+  .btn{
+    background: #00f0b0;
+    color: #000000;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border-color: #f40404;
+}
 
 .btn{
 display: block;
@@ -20,7 +104,7 @@ margin-top: 1rem;
 font-size: 1.7rem;
 padding: 1rem 3rem;
 border-radius: .5rem;
-background: #8c52ff;
+background: #00f0b0;
 color: #fff;
 text-align: center;
 }
@@ -31,7 +115,7 @@ background: black
 
 .message{
 display: block;
-background-color: #8c52ff;
+background-color: #03c994;
 padding:1.5rem 1rem;
 font-size: 2rem;
 color: black;
@@ -61,7 +145,7 @@ min-height: 100vh;
 }
 .admin_form_container form h3{
 text-transform: uppercase;
-color: aquamarine;
+color: #1ddba9;
 margin-bottom: 1rem;
 text-align: center;
 font-size: 2.5rem;
@@ -92,7 +176,7 @@ font-size: 2.5rem;
 .pet_display .pet_table thead{
 
   
-    background: #8c52ff;
+    background: #44dab2;
 
 }
 .pet_display .pet_table th{
@@ -123,6 +207,46 @@ background: crimson;
     
     }
 
+    button{
+        background: #00f0b0;
+        color: #fff;
+        padding: 1rem 3rem;
+        border-radius: .5rem;
+        text-align: center;
+        cursor: pointer;
+        font-size: 1.7rem;
+        margin-top: 1rem;
+    }
+
+    button:hover{
+        background: black;
+    }
+    button a{
+        text-decoration: none;
+        color: #fff;
+    }
+    .logout{
+        background: #00f0b0;
+        color: #fff;
+        padding: 0.1rem 0rem;
+        border-radius: 2rem;
+        text-align: center;
+        cursor: pointer;
+        font-size: 1.4rem;
+        font-weight: bold;
+       
+    }
+    .logout a{
+        text-decoration: none;
+        color: #fff;
+    }
+    .logout:hover{
+        background: black;
+    }
+   
+
+
+    
 
 
 

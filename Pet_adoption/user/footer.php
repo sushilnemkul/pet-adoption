@@ -90,8 +90,8 @@ footer {
         <div class="footer-links">
             <h3>Quick Links</h3>
             <ul>
-                <li><a href="Dogs.php">Available Dogs</a></li>
-                <li><a href="cats.php">Available Cats</a></li>
+                <li><a href="pets.php">Available Pets</a></li>
+                <!-- <li><a href="cats.php">Available Cats</a></li> -->
                 <li><a href="#how-to-help">How To Help</a></li>
                 <li><a href="#contact">Contact Us</a></li>
             </ul>

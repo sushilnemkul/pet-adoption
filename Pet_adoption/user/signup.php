@@ -1,9 +1,9 @@
 
     <?php include 'header.php'; ?>
     <?php
-    
-    if(isset($_SESSION['user'])){
-      header("Location: indexx.php");//redirects to login.php if not logged in
+ 
+    if(isset($_SESSION['user' === "true"] )){
+      header("Location: Login.php");//redirects to login.php if not logged in
       exit();
     }
     
@@ -20,15 +20,20 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background-image: url(img/sig.jpg);
+            background-size:cover;
         }
 
         .signup-container {
-            background-color: #fff;
+            background-color: #FFF4D9;
+            opacity: 0.8;
             padding: 20px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             max-width: 400px;
             width: 100%;
+            
+
         }
 
         h2 {
@@ -122,16 +127,32 @@ I
 
      // Basic validation
      if (empty($name) || empty($email) || empty($password) || empty($passwordRepeat)) {
-        $errors[] = "All fields are required.";
+        $errors[] = "<script>alert('All fields are required.');window.location.href = 'signup.php';</script>";
+        exit();
+
     }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Invalid email format.";
+        $errors[] = "<script>alert('Invalid email format.');window.location.href = 'signup.php';</script>";
+        exit();
     }
-    if (strlen($password) < 8) {
-        $errors[] = "Password must be at least 8 characters.";
+    if (strlen($password) < 6) {
+        $errors[] = "<script>alert('Password must be at least 6 characters long.');window.location.href = 'signup.php';</script>";
+        exit();
     }
     if ($password !== $passwordRepeat) {
-        $errors[] = "Passwords do not match.";
+        $errors[] = "<script>alert('Passwords do not match.');window.location.href = 'signup.php';</script>";
+        exit();
+    }
+
+    
+
+    // Check if username or email already exists
+    if (strtolower($name) === 'admin') {
+        echo "<script>
+        alert('The username \"admin\" is reserved and cannot be used.');
+        window.location.href = 'signup.php';
+        </script>";
+        exit();
     }
 
     require_once "database.php"; // Make sure this file contains $conn
@@ -145,7 +166,7 @@ I
     // Display errors if any
     if (count($errors) > 0) {
         foreach ($errors as $error) {
-            echo "<div class='alert alert-danger'>$error</div>";
+            echo "$error";
         }
     } else {
         // Hash the password for security
@@ -164,17 +185,17 @@ I
 
             // Execute statement
             if (mysqli_stmt_execute($stmt)) {
-                echo "<div class='alert alert-success'>Your account has been created successfully!</div>";
+                echo "Your account has been created successfully!!";
                 echo "<script>window.location.href = 'login.php';</script>"; 
                 exit();
             } else {
-                echo "<div class='alert alert-danger'>Something went wrong. Please try again.</div>";
+                echo "Something went wrong. Please try again.";
             }
 
             // Close the statement
             mysqli_stmt_close($stmt);
         } else {
-            echo "<div class='alert alert-danger'>Database error. Could not prepare statement.</div>";
+            echo "Database error. Could not prepare statement.";
         }
 
         // Close the database connection
@@ -202,7 +223,8 @@ I
             <label for="Repeat_password">Repeat-Password</label>
             <input type="password" id="repeat_password" name="repeat_password" >
             <span id="error_repeat_password"></span>
-      
+
+           
 
             <input type="submit" class="btn-submit" value="Create Account" id = "submit" name="submit">
         </form>
