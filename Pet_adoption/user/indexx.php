@@ -1,7 +1,20 @@
 
 
 <?php include 'header.php'; ?>
+
 <?php
+
+
+// Check if the user is logged in
+if (isset($_SESSION['user_id'])) {
+    // Redirect to pets.php if logged in
+    header("Location: pets.php");
+    exit();
+} else {
+    // Redirect to login.php if not logged in
+    header("Location: login.php");
+    exit();
+}
 
 ?>
 
@@ -78,9 +91,15 @@
           <div class="pname1">
            <h1>More pets available<br> for adoption</h1>
         </div>
-          <div class="btn2">
-            <!-- <button><a href="option.php">Find more </a></button> -->
-            <button id="adoptButton" class="btn"><a href="animal.php">Find more</a></button>
+          <!-- <div class="btn2">
+             <button><a href="option.php">Find more </a></button> -->
+
+            <!-- <button id="adoptButton" class="btn"><a href="pets.php">Find more</a></button> -->
+            <div class="btn2">
+    <form action="indexx.php" method="post">
+        <button type="submit" class="btn">Find more</button>
+    </form>
+</div>
 
         
 
@@ -155,14 +174,14 @@ body {
 
 
             </style>
-            <div id="popup" class="popup">
+            <!-- <div id="popup" class="popup">
         <div class="popup-content">
             <span class="close">&times;</span>
             <h3>Select an Option</h3>
             <button id="dogBtn" class="popup-btn">Dog</button>
             <button id="catBtn" class="popup-btn">Cat</button>
         </div>
-    </div>
+    </div> -->
     
 
 

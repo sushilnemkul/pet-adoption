@@ -17,6 +17,17 @@ html{
     font-family: "Roboto" sans-serif;
     box-sizing: border-box;
   }
+  .logoo h1{
+    display:flex;
+    font-weight:bold;
+    font-size: 30px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    margin: 0px;
+    padding: 0px;
+    
+  }
+  
  
   .navbar{
     

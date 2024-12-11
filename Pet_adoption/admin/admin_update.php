@@ -1,3 +1,4 @@
+<?php include 'admin_header.php'; ?>
 <?php
 session_start();
 
@@ -61,7 +62,7 @@ if (isset($_POST['update_pet'])) {
 </head>
 
 <body>
-
+<br><br><br><br><br><br><br><br>
     <?php
 
     if (isset($message)) {

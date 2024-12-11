@@ -2,10 +2,10 @@
     <?php include 'header.php'; ?>
     <?php
  
-    if(isset($_SESSION['user' === "true"] )){
-      header("Location: Login.php");//redirects to login.php if not logged in
-      exit();
-    }
+    // if(isset($_SESSION['user' === "true"] )){
+    //   header("Location: Login.php");//redirects to login.php if not logged in
+    //   exit();
+    // }
     
     
     ?>

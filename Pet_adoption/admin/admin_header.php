@@ -1,40 +1,104 @@
-<?php session_start();?>
+<?php
+// Start session
+session_start();
+
+// Check if the admin is logged in
+// if (!isset($_SESSION['admin_logged_in'])) {
+//     header('Location: login.php'); // Redirect to login page if not logged in
+//     exit;
+// }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f7e7ce;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #fae6d1;
+            position: fixed;
+            top: 50px;
+            bottom: 0;
+            left: 0;
+            padding: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+        }
+
+        .sidebar ul li a:hover {
+            color: #4CAF50;
+        }
+
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-    
-<div class="navbar">
-             <div class="logo"><img src="img/logo.png" alt="adopt" width="125px"></div><style></style></h2>  
-               <ul class="menu">
-                <li><a href="indexx.php">HOME</a></li>
-                <li><a href="about.php">ABOUT</a></li>
-             
-               
+    <!-- Header Section -->
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+        <div class="nav">
+        <li><a href="admin_page.php">Dashboard</a></li>
+            <li><a href="users.php">Users</a></li>
+            <li><a href="request.php">Request</a></li>
+            <li><a href="history.php">History</a></li>
+            <a href="logout.php">Logout</a>
+        </div>
+    </div>
 
-                <li><a href="Dogs.php">DOGS</a></li>
-            
 
-
-                <li><a href="cats.php">CATS</a></li>
-
-      
-
-                <li><a href="#">How To Help</a></li>    
-              <li><a href="#">Contact Us</a></li>
-          <!-- Change button based on session status -->
-          <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] === "true") { ?>
-   <div class="logout"><li><a id="logout" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a></li></div>
-
-<?php } else { ?>
-   <div class="login"> <li><a id="login" href="../user/Login.php"> <i class="fa fa-sign-in"></i>Login</a></li></div>
-<?php } ?>
-
-              
-          </div>
 </body>
 </html>

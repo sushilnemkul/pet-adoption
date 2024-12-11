@@ -1,7 +1,7 @@
 <style>
 /* Make sure the HTML and body fill the entire height */
 html, body {
-    height: 100%;
+    height:100%;
     margin: 0;
     padding: 0;
 }
@@ -20,8 +20,8 @@ main {
 
 /* Footer styles (already provided) */
 footer {
-    background-color: #f5f5f5;
-    padding: 30px 0;
+    background-color:#ffe5b4 ;
+    padding: 10px 0;
     color: #333;
     text-align: center;
     font-family: Arial, sans-serif;
@@ -31,16 +31,17 @@ footer {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    padding: 0 20px;
+    padding: 0 10px;
+    padding-left: 100px;
+    height: 200px;
 }
 
-.footer-about, .footer-links, .footer-contact {
-    flex: 1;
-    min-width: 200px;
+ .footer-links, .footer-contact {
+    flex: 2;
+    min-width: 10px;
     margin: 15px;
 }
-
-.footer-about h3, .footer-links h3, .footer-contact h3 {
+ .footer-links h3, .footer-contact h3 {
     margin-bottom: 15px;
     font-size: 18px;
 }
@@ -80,10 +81,41 @@ footer {
 }
 
 
+.footer-about {
+    display: flex;
+    align-items: center;
+    flex: 2;
+    min-width: 100px;
+    margin: 15px;
+}
+
+.footer-about .logo2 img {
+    margin-right: 10px; /* Adds some spacing between the logo and text */
+    padding-left: 200px;
+}
+
+.footer-about-content {
+    flex: 1;
+    padding-top: 20PX;
+
+}
+
+.footer-about h3 {
+    margin-top: 0;
+    font-size: 18px;
+    padding-bottom: 300px;
+}
+
+
+
 </style>
 <footer>
     <div class="footer-container">
-        <div class="footer-about">
+    <div class="logo2">
+                <img src="img/logo.png" alt="Adopt A Buddy Logo" width="120" height="120">
+            </div>
+        <div class="footer-about-content">
+          
             <h3>About Adopt A Buddy</h3>
             <p>Adopt A Buddy is a non-profit organization dedicated to finding forever homes for pets in need. Join us in our mission to provide love and care to animals waiting to be adopted.</p>
         </div>

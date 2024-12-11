@@ -1,6 +1,6 @@
 <?php include 'admin_header.php'; ?>
 <?php
-session_start();
+// session_start();
 
 if(!isset($_SESSION['admin'])){
     header("Location: ../user/Login.php");//redirects to login.php if not logged in
@@ -74,7 +74,7 @@ if(isset($message)){
 }
 
 ?>
-<br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br>
     <div class="container">
         <div class="admin_form_container">
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
