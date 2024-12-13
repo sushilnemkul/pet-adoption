@@ -1,20 +1,7 @@
 
 
 <?php include 'header.php'; ?>
-
 <?php
-
-
-// Check if the user is logged in
-if (isset($_SESSION['user_id'])) {
-    // Redirect to pets.php if logged in
-    header("Location: pets.php");
-    exit();
-} else {
-    // Redirect to login.php if not logged in
-    header("Location: login.php");
-    exit();
-}
 
 ?>
 
@@ -42,8 +29,8 @@ if (isset($_SESSION['user_id'])) {
             <P> Age: 1 <br>Breed: Dalmatian</P>
           </div>
           <div class="btn1">
-            <button><a href="#">Details</a></button>
-            <button id="adoptButton"><a href="#">Adopt</a></button>
+            <button><a href="#">View Details</a></button>
+         
             
           </div>
 
@@ -61,8 +48,8 @@ if (isset($_SESSION['user_id'])) {
             <P> Age: 1.5 <br>Breed: Corgi</P>
           </div>
           <div class="btn1">
-            <button><a href="#">Details</a></button>
-            <button id="adoptButton" ><a href="#">Adopt</a></button>
+            <button><a href="#">View Details</a></button>
+           
             
           </div>
 
@@ -79,8 +66,8 @@ if (isset($_SESSION['user_id'])) {
           <P> Age: 1.5 <br>Breed: Siamese</P>
         </div>
         <div class="btn1">
-          <button><a href="#">Details</a></button>
-          <button id="adoptButton" ><a href="#">Adopt</a></button>
+          <button><a href="#">View Details</a></button>
+         
           
         </div>
       </div>  
@@ -91,15 +78,10 @@ if (isset($_SESSION['user_id'])) {
           <div class="pname1">
            <h1>More pets available<br> for adoption</h1>
         </div>
-          <!-- <div class="btn2">
-             <button><a href="option.php">Find more </a></button> -->
-
-            <!-- <button id="adoptButton" class="btn"><a href="pets.php">Find more</a></button> -->
-            <div class="btn2">
-    <form action="indexx.php" method="post">
-        <button type="submit" class="btn">Find more</button>
-    </form>
-</div>
+          <div class="btn2">
+            <!-- <button><a href="option.php">Find more </a></button> -->
+             
+            <button id="adoptButton" class="btn"><a href="pets.php">Find more</a></button>
 
         
 
