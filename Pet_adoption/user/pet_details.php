@@ -5,12 +5,14 @@ include 'database.php';
 $data = array();
 $id = $_GET['id'];
 
-$sql = "SELECT * FROM pets WHERE id = {$id}";
+
+
+$sql = "SELECT * FROM pets WHERE pet_id = {$id}";
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_array($result)) {
         $data = array(
-            "ID" => $row['ID'],
+            "pet_id" => $row['pet_id'],
             "name" => $row['pet_name'],
             "pet_breed" => $row['pet_breed'],
             "pet_age" => $row['pet_age'],
@@ -28,6 +30,31 @@ if (mysqli_num_rows($result) > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Details</title>
+
+</head>
+<body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <section>
+        <br><br><br><br><br><br><br><br><br><br>
+        <div class="card">            
+            <div class="img">
+                <img src="../admin/uploaded_img/<?php echo $data['image']; ?>" alt="Pet Image">
+            </div>
+            <div class="details">
+                <h1>Pet Details</h1>
+                <p><strong>ID:</strong> <?php echo $data['pet_id']; ?></p>
+                <p><strong>Name:</strong> <?php echo $data['name']; ?></p>
+                <p><strong>Breed:</strong> <?php echo $data['pet_breed']; ?></p>
+                <p><strong>Age:</strong> <?php echo $data['pet_age']; ?></p>
+                <p><strong>Gender:</strong> <?php echo $data['pet_gender']; ?></p>
+                <p><strong>Description:</strong> <?php echo $data['pet_desc']; ?></p>
+                <p><strong>Status:</strong> <?php echo $data['status']; ?></p>
+                <a href="aagreementform.php?id=<?php echo $data['pet_id']; ?>" class="adopt">Adopt</a>
+                <a href="pets.php" class="back-link"><i class="">   Back</i></a>
+                
+            </div>
+        </div>
+    </section>
     <style>
         body {
           
@@ -118,30 +145,6 @@ if (mysqli_num_rows($result) > 0) {
             background-color: #000000;
         }
     </style>
-</head>
-<body>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
-    <section>
-        <br><br><br><br><br><br><br><br><br><br>
-        <div class="card">            
-            <div class="img">
-                <img src="../admin/uploaded_img/<?php echo $data['image']; ?>" alt="Pet Image">
-            </div>
-            <div class="details">
-                <h1>Pet Details</h1>
-                <p><strong>ID:</strong> <?php echo $data['ID']; ?></p>
-                <p><strong>Name:</strong> <?php echo $data['name']; ?></p>
-                <p><strong>Breed:</strong> <?php echo $data['pet_breed']; ?></p>
-                <p><strong>Age:</strong> <?php echo $data['pet_age']; ?></p>
-                <p><strong>Gender:</strong> <?php echo $data['pet_gender']; ?></p>
-                <p><strong>Description:</strong> <?php echo $data['pet_desc']; ?></p>
-                <p><strong>Status:</strong> <?php echo $data['status']; ?></p>
-                <a href="aagreement.php?id=<?php echo $data['ID']; ?>" class="adopt">Adopt</a>
-                <a href="pets.php" class="back-link"><i class="">   Back</i></a>
-                
-            </div>
-        </div>
-    </section>
 </body>
 <?php include 'footer.php'; ?>
 </html>

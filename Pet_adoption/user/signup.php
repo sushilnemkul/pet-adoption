@@ -25,6 +25,7 @@
         }
 
         .signup-container {
+            margin-top: 70px;
             background-color: #FFF4D9;
             opacity: 0.8;
             padding: 20px;
@@ -49,6 +50,8 @@
 
         input[type="text"],
         input[type="email"],
+        input[type="tel"],
+        input[type="address"],
         input[type="password"],
         input[type="Repeat-password"]
          {
@@ -110,132 +113,119 @@ I
     </style>
 
 
-    <div class="signup-container">
-        <h2>Sign Up</h2>
+<div class="signup-container">
+    <h2>Sign Up</h2>
 
-        <?Php
-    if(isset($_POST['submit'])){
-    //inserting data into database table
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $passwordRepeat = $_POST['repeat_password'];
-    $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+    <?php
+    if (isset($_POST['submit'])) {
+        require_once "database.php"; // Ensure database connection file is included
 
+        // Retrieve and sanitize input data
+        $name = trim($_POST['name']);
+        $email = trim($_POST['email']);
+        $phone = trim($_POST['phone']);
+        $address = trim($_POST['address']);
+        $password = $_POST['password'];
+        $passwordRepeat = $_POST['repeat_password'];
 
-    $errors = array();
+        $errors = [];
 
-     // Basic validation
-     if (empty($name) || empty($email) || empty($password) || empty($passwordRepeat)) {
-        $errors[] = "<script>alert('All fields are required.');window.location.href = 'signup.php';</script>";
-        exit();
-
-    }
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "<script>alert('Invalid email format.');window.location.href = 'signup.php';</script>";
-        exit();
-    }
-    if (strlen($password) < 6) {
-        $errors[] = "<script>alert('Password must be at least 6 characters long.');window.location.href = 'signup.php';</script>";
-        exit();
-    }
-    if ($password !== $passwordRepeat) {
-        $errors[] = "<script>alert('Passwords do not match.');window.location.href = 'signup.php';</script>";
-        exit();
-    }
-
-    
-
-    // Check if username or email already exists
-    if (strtolower($name) === 'admin') {
-        echo "<script>
-        alert('The username \"admin\" is reserved and cannot be used.');
-        window.location.href = 'signup.php';
-        </script>";
-        exit();
-    }
-
-    require_once "database.php"; // Make sure this file contains $conn
-    $sql = "SELECT * FROM users WHERE email = '$email'";
-    $result = mysqli_query($conn, $sql);
-    $rowcount = mysqli_num_rows($result);
-    if ($rowcount > 0) {
-        array_push($errors, "Email already exists.");
-    }
-
-    // Display errors if any
-    if (count($errors) > 0) {
-        foreach ($errors as $error) {
-            echo "$error";
+        // Input validation
+        if (empty($name) || empty($email) || empty($password) || empty($passwordRepeat) || empty($phone) || empty($address)) {
+            $errors[] = "All fields are required.";
         }
-    } else {
-        // Hash the password for security
-      
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "Invalid email format.";
+        }
+        if (!preg_match('/^[0-9]{10}$/', $phone)) {
+            $errors[] = "Phone number must be exactly 10 digits.";
+        }
+        if (strlen($password) < 6) {
+            $errors[] = "Password must be at least 6 characters long.";
+        }
+        if ($password !== $passwordRepeat) {
+            $errors[] = "Passwords do not match.";
+        }
+        if (strtolower($name) === 'admin') {
+            $errors[] = "The username 'admin' is reserved and cannot be used.";
+        }
 
-        // Database connection
-       
+        // Check if email already exists in the database
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        // SQL query to insert data
-        $sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-        $stmt = mysqli_stmt_init($conn);
+        if ($result->num_rows > 0) {
+            $errors[] = "Email already exists.";
+        }
+        $stmt->close();
 
-        if (mysqli_stmt_prepare($stmt, $sql)) {
-            // Bind parameters
-            mysqli_stmt_bind_param($stmt, "sss", $name, $email, $passwordHash);
+        // Check if phone number already exists in the database
+        $stmt = $conn->prepare("SELECT * FROM users WHERE phone = ?");
+        $stmt->bind_param("s", $phone);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-            // Execute statement
-            if (mysqli_stmt_execute($stmt)) {
-                echo "Your account has been created successfully!!";
-                echo "<script>window.location.href = 'login.php';</script>"; 
-                exit();
+        if ($result->num_rows > 0) {
+            $errors[] = "Phone number is already registered.";
+        }
+        $stmt->close();
+
+        // If there are errors, display them
+        if (!empty($errors)) {
+            foreach ($errors as $error) {
+                echo "<script>alert('$error');</script>";
+            }
+        } else {
+            // Hash the password
+            $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+
+            // Insert user into the database
+            $stmt = $conn->prepare("INSERT INTO users (name, email, password, phone, address) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssss", $name, $email, $passwordHash, $phone, $address);
+
+            if ($stmt->execute()) {
+                echo "<script>alert('Your account has been created successfully!'); window.location.href = 'login.php';</script>";
             } else {
-                echo "Something went wrong. Please try again.";
+                echo "<script>alert('Something went wrong. Please try again.');</script>";
             }
 
-            // Close the statement
-            mysqli_stmt_close($stmt);
-        } else {
-            echo "Database error. Could not prepare statement.";
+            $stmt->close();
         }
 
         // Close the database connection
-        mysqli_close($conn);
+        $conn->close();
     }
-}
+    ?>
+</div>
 
-   
-?>
+    <form action="signup.php" method="post" id="adoptionForm">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
 
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Email" required>
 
-        <form action="signup.php" method="post" id="adoptionForm">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" placeholder="Enter your name" required>
-            <span id="error_full_name"></span>
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" placeholder="Phone" required>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Email" required>
-            <span id="error_email"></span>
+        <label for="address">Address</label>
+        <input type="text" id="address" name="address" placeholder="Address" required>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required >
-            <span id="error_password"></span>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
 
-            <label for="Repeat_password">Repeat-Password</label>
-            <input type="password" id="repeat_password" name="repeat_password" >
-            <span id="error_repeat_password"></span>
+        <label for="repeat_password">Repeat Password</label>
+        <input type="password" id="repeat_password" name="repeat_password" required>
 
-           
+        <input type="submit" class="btn-submit" value="Create Account" id="submit" name="submit">
+    </form>
 
-            <input type="submit" class="btn-submit" value="Create Account" id = "submit" name="submit">
-        </form>
-
-        <div class="login-link">
-            Already have an account? <a href="login.php">Login</a>
-        </div>
+    <div class="login-link">
+        Already have an account? <a href="login.php">Login</a>
     </div>
-    <!-- <script src="script.js"></script> -->
-</body>
-</html>
+</div>
 
 
 

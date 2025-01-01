@@ -2,10 +2,10 @@
 <?php
 // session_start();
 
-if(!isset($_SESSION['admin'])){
-    header("Location: ../user/Login.php");//redirects to login.php if not logged in
-    exit();
-  }
+// if(!isset($_SESSION['admin'])){
+//     header("Location: adminlogin.php");//redirects to login.php if not logged in
+//     exit();
+//   }
 
 ?>
 <?php
@@ -44,11 +44,33 @@ if(isset($_POST['add_pet'])) {
         }
     }
 };
-if(isset($_GET['delete'])){
-$id = $_GET['delete'];
-mysqli_query($conn, "DELETE FROM pets WHERE ID = '$id'");
-header('location:admin_page.php');
-};
+
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+
+    // Show the confirmation message with Yes and No buttons
+    echo "
+    <div style='text-align: center; margin-top: 50px;'>
+        <h3>Are you sure you want to delete this pet?</h3>
+        <a href='admin_page.php?confirm_delete=$id' style='padding: 10px 20px; background-color: red; color: white; text-decoration: none; border-radius: 5px;'>Yes</a>
+        <a href='admin_page.php' style='padding: 10px 20px; background-color: green; color: white; text-decoration: none; border-radius: 5px;'>No</a>
+    </div>";
+    exit(); // Stop further script execution to show the confirmation page
+}
+
+// Handle the confirmed deletion
+if (isset($_GET['confirm_delete'])) {
+    $id = $_GET['confirm_delete'];
+
+    // Execute the deletion query
+    mysqli_query($conn, "DELETE FROM pets WHERE pet_id = '$id'");
+
+    // Redirect back to the admin page
+    header('Location: admin_page.php');
+    exit();
+}
+
+
 
 
 ?>
@@ -86,7 +108,7 @@ if(isset($message)){
                 <input type="text" name="pet_description" placeholder="Description of pet" class="box">
                 <select name="pet_status" class="box">
             <option value="available">Available</option>
-            <option value="adopted">Adopted</option>
+            <option value=" ed">Adopted</option>
             <option value="pending" >Pending</option>
         </select>
                 <input type="file" accept="image/png, image/jpeg, image/jpg, image/webp" name="pet_image" class="box" >
@@ -94,7 +116,7 @@ if(isset($message)){
             </form>
         </div>
         <?php
-        $select = mysqli_query($conn, "SELECT * FROM pets ORDER BY ID DESC");
+        $select = mysqli_query($conn, "SELECT * FROM pets ORDER BY pet_id DESC");
 
        
         
@@ -130,11 +152,11 @@ if(isset($message)){
                            <td><?php echo $row['pet_status']; ?></td>
                            <td>
     <!-- Edit button -->
-    <a href="admin_update.php?edit=<?php echo $row['ID']; ?>" class="btn">
+    <a href="admin_update.php?edit=<?php echo $row['pet_id']; ?>" class="btn">
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit
     </a>
     <!-- Delete button -->
-    <a href="admin_page.php?delete=<?php echo $row['ID']; ?>" class="btn">
+    <a href="admin_page.php?delete=<?php echo $row['pet_id']; ?>" class="btn">
         <i class="fa fa-trash-o" aria-hidden="true"></i>Delete
     </a>
 </td>

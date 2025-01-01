@@ -9,7 +9,7 @@
         align-items: center;
         height: 100vh;
         margin: 0;
-        background-image:url(img/logi.jpg.png);
+        background-image: url(img/logi.jpg.png);
         background-size: cover;
     }
 
@@ -21,7 +21,6 @@
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         text-align: center;
         margin-left: 100px;
-      
     }
 
     h1 {
@@ -69,110 +68,62 @@
     .signup-link a:hover {
         text-decoration: underline;
     }
-
-    select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        margin-bottom: 10px;
-        background-color: #fff;
-        color: #333;
-        font-size: 16px;
-        cursor: pointer;
-     
-
-    }
-   
-    
 </style>
 
-
-
-    <?php
-// Start the session
-
-
+<?php
 include 'database.php';
 
+
 if (isset($_POST["login"])) {
-  
     $email = $_POST["email"];
     $password = $_POST["password"];
-    $usertype = $_POST['usertype'];
 
-    // Determine the table based on user type
-    if ($usertype === 'admin') {
-        $sql = "SELECT * FROM shelteradmin WHERE email = '$email'";
-    } elseif ($usertype === 'user') {
-        $sql = "SELECT * FROM users WHERE email = '$email'";
-    } else {
-        die("<script>alert('Invalid user type.');window.location.href = 'Login.php';</script>");
-    }
+    // Check both admin and user tables for the email
+  
+    $userQuery = "SELECT * FROM users WHERE email = '$email'";
 
-    // Execute the query
-    $result = mysqli_query($conn, $sql);
 
-    // Check for query errors
-    if (!$result) {
-        die("Query failed: " . mysqli_error($conn));
-    }
+  
+    $userResult = mysqli_query($conn, $userQuery);
+    
 
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_array($result);
-
+   if (mysqli_num_rows($userResult) > 0) {
+        $row = mysqli_fetch_array($userResult);
         // Verify the password
         if (password_verify($password, $row['password'])) {
-            if ($usertype === 'admin') {
-                $_SESSION['admin'] = "true";
-               
-                echo "<script>alert('Welcome to the admin panel!');window.location.href = '../admin/admin_page.php';</script>";
-            } elseif ($usertype === 'user') {
-                $_SESSION['user'] = "true";
-               
-             header("Location: indexx.php");
-            }
-            exit();
+            // After successful login
+$_SESSION['user'] = "true";
+$_SESSION['user_id'] = $user_id; // Assuming $user_id is the ID of the logged-in user
+            $_SESSION['user_id'] = $row['ID']; 
           
+            
+          
+            header("Location: indexx.php");
+            exit();
         } else {
-            echo "<script>alert('Invalid password for $usertype.');window.location.href = 'Login.php';</script>"; // echo "Invalid password for $usertype.";
+            echo "<script>alert('Invalid password for user account.');window.location.href = 'Login.php';</script>";
         }
     } else {
-        echo "<script>alert('No $usertype found with that email.');window.location.href = 'Login.php';</script>"; // echo "No $usertype found with that email.";
+        echo "<script>alert('No account found with that email.');window.location.href = 'Login.php';</script>";
     }
 }
 ?>
 
 <div class="login-container">
-<!-- <div class="welcome-message">
-            <h1>Welcome to Pet Adoption</h1>
-            <p>Find your perfect pet companion today. Log in or sign up to get started!</p>
-        </div> -->
-<h1>Login</h1>
+    <h1>Login</h1>
     <form action="Login.php" method="post">
-        <label for="username">Username:</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email:">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email">
         <span id="error_email"></span>
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" placeholder="Enter your password">
-        <span id="error_password"></span>  
-        
-        <label for="usertype">User Type</label>
-            <select id="usertype" name="usertype">
-            <option value="">Select User Type</option>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-        </select>
-      
+        <span id="error_password"></span>
 
-        <input type="submit" value="login" name="login" id = "login">
+        <input type="submit" value="Login" name="login" id="login">
     </form>
 
     <div class="signup-link">
         Don't have an account? <a href="signup.php">Sign Up</a>
     </div>
 </div>
-
-
-

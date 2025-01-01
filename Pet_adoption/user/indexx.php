@@ -13,7 +13,7 @@
               <br>the unconditional love and joy that only a pet can bring.<br> 
               So, consider adopting and be a hero for those who need it most</p>
 
-            <button class="cn" id="adoptButton"><a href="#">ADOPT A BUDDY</a></button>
+            <button class="cn" id="adoptButton"><a href="pets.php">ADOPT A BUDDY</a></button>
         </div>
         <h1 class="pets">Pets Available For Adoption ></h1>
         <div class="main">

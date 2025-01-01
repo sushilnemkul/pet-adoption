@@ -4,8 +4,8 @@
 // session_start();
 
 // Check if the user is logged in
-if (!isset($_SESSION['user'])) {
-    header("Location: login.php"); // Redirect to login.php if not logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: Login.php"); // Redirect to login.php if not logged in
     exit();
 }
 
@@ -36,6 +36,37 @@ $result = mysqli_query($conn, $sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Available Pets for Adoption</title>
+   
+</head>
+<body>
+    <h1>Available Pets for Adoption</h1>
+<br>
+    <form action="" method="POST">
+        <input type="text" id="pet_search" name="pet_search" placeholder="Search by pet name" value="<?= htmlspecialchars($searchTerm) ?>">
+        <input type="submit" value="Search" id="search" name="search">
+
+        <h5><a href="">Clear search</a></h5>
+    </form>
+
+    <div class="card-container">
+        <?php
+        // Check if there are rows returned
+        if (mysqli_num_rows($result) > 0) {
+            // Loop through each row and display it as a card
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo '<div class="card">';
+                echo '<img src="../admin/uploaded_img/' . $row['image'] . '" alt="' . $row['pet_name'] . '">';
+                echo '<h3>' . $row['pet_name'] . '</h3>';
+                echo '<p>Breed: ' . $row['pet_breed'] . '</p>';
+                echo '<p>Status: ' . $row['pet_status'] . '</p>';
+                echo '<a href="pet_details.php?id=' . $row['pet_id'] . '">View Details</a>';
+                echo '</div>';
+            }
+        } else {
+            echo '<p>No pets found in the database.</p>';
+        }
+        ?>
+    </div>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -133,37 +164,6 @@ $result = mysqli_query($conn, $sql);
             opacity: 0.9;
         }
     </style>
-</head>
-<body>
-    <h1>Available Pets for Adoption</h1>
-<br>
-    <form action="" method="POST">
-        <input type="text" id="pet_search" name="pet_search" placeholder="Search by pet name" value="<?= htmlspecialchars($searchTerm) ?>">
-        <input type="submit" value="Search" id="search" name="search">
-
-        <h5><a href="">Clear search</a></h5>
-    </form>
-
-    <div class="card-container">
-        <?php
-        // Check if there are rows returned
-        if (mysqli_num_rows($result) > 0) {
-            // Loop through each row and display it as a card
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="card">';
-                echo '<img src="../admin/uploaded_img/' . $row['image'] . '" alt="' . $row['pet_name'] . '">';
-                echo '<h3>' . $row['pet_name'] . '</h3>';
-                echo '<p>Breed: ' . $row['pet_breed'] . '</p>';
-                echo '<p>Status: ' . $row['pet_status'] . '</p>';
-                echo '<a href="pet_details.php?id=' . $row['ID'] . '">View Details</a>';
-                echo '</div>';
-            }
-        } else {
-            echo '<p>No pets found in the database.</p>';
-        }
-        ?>
-    </div>
-
     <?php include 'footer.php'; ?>
 </body>
 </html>

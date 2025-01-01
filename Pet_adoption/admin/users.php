@@ -1,35 +1,88 @@
 <?php include 'admin_header.php'; ?>
+
+<?php
+// Include database connection
+include 'config.php';
+
+// Handle the action to mark a user as non-active
+if (isset($_GET['delete'])) {
+    $id = intval($_GET['delete']); // Sanitize the ID to ensure it's an integer
+
+    // Prepare an UPDATE query to set the user as non-active (instead of deleting)
+    $stmt = $conn->prepare("UPDATE users SET status = 'non-active' WHERE ID = ?");
+    $stmt->bind_param("i", $id);
+
+    if ($stmt->execute()) {
+        // Redirect back to the same page after updating the status
+        header('Location: users.php');
+        exit();
+    } else {
+        echo "Error updating user status: " . $stmt->error;
+    }
+
+    $stmt->close();
+}
+
+// Query to fetch all users (both active and non-active)
+$sql = "SELECT * FROM users"; // Fetch all users regardless of status
+$result = mysqli_query($conn, $sql);
+?>
+
+<center><h1>User Management</h1></center>
+
+<div class="card-container">
+    <?php
+    // Check if there are rows returned
+    if ($result && mysqli_num_rows($result) > 0) {
+        // Loop through each row and display it as a card
+        while ($row = mysqli_fetch_assoc($result)) {
+            echo '<div class="card">';
+            echo '<h3>' . htmlspecialchars($row['name']) . '</h3>';
+            echo '<p><strong>Email:</strong> ' . htmlspecialchars($row['email']) . '</p>';
+            echo '<p><strong>Phone:</strong> ' . htmlspecialchars($row['Phone']) . '</p>';
+            echo '<p><strong>Address:</strong> ' . htmlspecialchars($row['address']) . '</p>';
+            echo '<a class="view" href="userdetails.php?id=' . $row['ID'] . '">View Details</a>';
+            
+            // Display Edit button only if the user is active
+            if ($row['status'] == 'active') {
+                echo '<a class="edit" href="user_update.php?edit=' . $row['ID'] . '">Edit</a>';
+            }
+            
+            // Display the Delete button only if the user is active
+            if ($row['status'] == 'active') {
+                echo '<a class="delete" href="users.php?delete=' . $row['ID'] . '" 
+                       onclick="return confirm(\'Are you sure you want to mark this user as non-active?\')">Delete</a>';
+            } else {
+                // For non-active users, display a message
+                echo '<span class="status" style="color: gray;">This user is non-active</span>';
+            }
+
+            echo '</div>';
+        }
+    } else {
+        echo '<p>No users found in the database.</p>';
+    }
+    ?>
+</div>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Available Users</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>User Management</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f7e7ce;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            
-            background-color: #f7e7ce;
         }
-
         h1 {
-            text-align: center;
-            margin-top: -10px;
+            margin: 20px 0;
         }
-
-        #searchInput {
-            display: block;
-            margin: 20px auto;
-            padding: 10px;
-            width: 80%;
-            max-width: 400px;
-            font-size: 16px;
-        }
-
         .card-container {
             display: flex;
             flex-wrap: wrap;
@@ -37,107 +90,73 @@
             gap: 20px;
             padding: 20px;
         }
-
         .card {
+            background-color:#FCE195;
             border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-            width: 300px;
-            padding: 15px;
-            text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
+            border-radius: 10px;
+            padding: 20px;
+            width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
         }
-
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+            transform: scale(1.05);
         }
-
-        .card img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
         .card h3 {
-            margin: 10px 0;
-            font-size: 20px;
+            margin-top: 0;
         }
-
         .card p {
-            margin: 5px 0;
-            font-size: 14px;
-            color: #555;
+            margin: 10px 0;
         }
-
         .card a {
             display: inline-block;
-            margin: 5px;
-            padding: 10px 15px;
+            margin: 10px 5px;
+            padding: 10px 20px;
             text-decoration: none;
-            color:  #f7e7ce;
-            background-color: #28a749;
+            font-weight: bold;
+            color: #fff;
             border-radius: 5px;
-            font-size: 14px;
         }
-
         .card a.view {
-            background-color:#fa8072;
-            color: black;
+            background-color: #28a745;
         }
-
-        .card a.adopt {
-            background-color: #28a749;
-            color: black;
+        .card a.edit {
+            background-color: #007bff;
         }
-
+        .card a.delete {
+            background-color: #dc3545;
+        }
         .card a:hover {
             opacity: 0.9;
         }
     </style>
 </head>
 <body>
-    <br><br><br><br><br><br><br>
 
-<h1>User Details</h1>
-
-<div class="card-container">
 <?php
-
-// Include database connection
-include 'config.php';
-
-// Query to fetch data from the pets table
-$sql = "SELECT * FROM users";
-$result = mysqli_query($conn, $sql);
-
-// Check if there are rows returned
-if (mysqli_num_rows($result) > 0) {
-    // Loop through each row and display it as a card
-    while ($row = mysqli_fetch_assoc($result)) {
-        echo '<div class="card">';
-        // echo '<img src="uploaded_img/' . $row['image'] . '" alt="' . $row['name'] . '">';
-        echo '<h3>' . $row['name'] . '</h3>';
-        echo '<p>Email: ' . $row['email'] . '</p>';
-        // echo '<p>Password: ' . $row['password'] . '</p>';
-        // echo '<p>Address: ' . $row['address'] . '</p>';
-        echo '<a class="view" href="userdetails.php?id=' . $row['ID'] . '">View Details</a>';
-        echo '<a class="adopt" href="user_update.php?edit=' . $row['ID'] . '">Edit</a>';
-        echo '<a class="adopt" href="users.php?delete=' . $row['ID'] . '">Delete</a>';
-        echo '</div>';
+// Check if a delete request has been made
+if (isset($_GET['delete'])) {
+    $user_id = $_GET['delete'];
+    
+    // Update the user's status to 'non-active'
+    $query = "UPDATE users SET status='non-active' WHERE ID = ?";
+    if ($stmt = mysqli_prepare($conn, $query)) {
+        mysqli_stmt_bind_param($stmt, 'i', $user_id);
+        if (mysqli_stmt_execute($stmt)) {
+            echo "<p>User has been marked as non-active.</p>";
+        } else {
+            echo "<p>Error updating user status.</p>";
+        }
+        mysqli_stmt_close($stmt);
     }
-} else {
-    echo '<p>No pets found in the database.</p>';
-};
-if(isset($_GET['delete'])){
-    $id = $_GET['delete'];
-    mysqli_query($conn, "DELETE FROM users WHERE ID = '$id'");
-    // header('location: users.php');
-    };
+}
+
+// Fetch only active users (status = 'active')
+$query = "SELECT * FROM users WHERE status = 'active'"; // Only fetch active users
+$result = mysqli_query($conn, $query);
+
 ?>
-</div>
+
 
 
 </body>

@@ -1,96 +1,128 @@
-<?php include 'admin_header.php'; ?>
+<?php include 'admin_header.php';?>
+
 <?php
-// session_start();
+// Include database connection
+include 'config.php';
 
-// if(!isset($_SESSION['admin'])){
-//     header("Location: ../user/Login.php");//redirects to login.php if not logged in
-//     exit();
-//   }
-@include 'config.php';
+// Check if the form is submitted to update user details
+if (isset($_POST['update'])) {
+    $id = intval($_POST['id']); // Sanitize the ID
+    $name = htmlspecialchars($_POST['name']);
+    $email = htmlspecialchars($_POST['email']);
+    $phone = htmlspecialchars($_POST['phone']);
+    $address = htmlspecialchars($_POST['address']);
 
+    // Prepare an UPDATE query using prepared statements
+    $stmt = $conn->prepare("UPDATE users SET name = ?, email = ?, Phone = ?, address = ? WHERE ID = ?");
+    $stmt->bind_param("ssssi", $name, $email, $phone, $address, $id);
 
-
-$id = $_GET['edit'];
-
-
-
-if (isset($_POST['update_user'])) {
- $name = $_POST ['name'];
-    $email = $_POST['email'];
-    $address = $_POST['address'];
-
-    $phone = $_POST['Phone'];
-    
-   
-
-    // $pet_image_tmp_name = $_FILES['pet_image']['tmp_name'];
-    // $pet_image_folder = 'uploaded_img/' . $pet_image;
-
-    if (empty($name) || empty($email) || empty($address) || empty($phone)) {
-        $message[] = 'please fill out all';
+    if ($stmt->execute()) {
+        // Redirect back to the users page after updating
+        header('Location: users.php');
+        exit();
     } else {
-
-
-        $update = "UPDATE users SET name='$name', email='$email', address='$address', Phone='$phone' WHERE ID = '$id'";
-        $upload = mysqli_query($conn, $update);
-        // if ($upload) {
-        //     move_uploaded_file($pet_image_tmp_name, $pet_image_folder);
-        //     $message[] = '<script>alert("Pet updated successfully")</script>';
-        //     header('location:admin_page.php');
-        // } else {
-        //     $message[] = '<script>alert("Failed to add pet")</script>';
-        // }
+        echo "Error updating user: " . $stmt->error;
     }
-};
 
+    $stmt->close();
+}
+
+// Fetch user details to populate the form
+if (isset($_GET['edit'])) {
+    $id = intval($_GET['edit']); // Sanitize the ID
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE ID = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+    } else {
+        echo "User not found.";
+        exit();
+    }
+
+    $stmt->close();
+} else {
+    echo "Invalid request.";
+    exit();
+}
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Update</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-<br><br><br><br><br><br><br><br>
-    <?php
-
-    if (isset($message)) {
-        foreach ($message as $message) {
-            echo '<span class="message">' . $message . '</span>';
+    <title>Update User</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #FCE195;
         }
-    }
+        .container h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding-right: 2px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Update User Details</h2>
+    <form method="POST" action="">
+        <input type="hidden" name="id" value="<?php echo $user['ID']; ?>">
 
-    ?>
-
-    <div class="container">
-        <div class="admin_form_container centered">
-
-            <?php
-            $select = mysqli_query($conn, "SELECT * FROM users WHERE ID = '$id'");
-            while ($row = mysqli_fetch_assoc($select)) {
-
-            ?>
-
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>?edit=<?php echo $id; ?>" method="post" enctype="multipart/form-data">
-                    <h3>Update user info </h3>
-                    <input type="text" name="name" placeholder="User name" value="<?php echo $row['name']; ?>" class="box">
-                    <input type="text" name="email" placeholder="User email" value="<?php echo $row['email']; ?>" class="box">
-                    <input type="text" name="address" placeholder="User address" value="<?php echo $row['address']; ?>" class="box">
-                    <input type="text" name="Phone" placeholder="User phone" value="<?php echo $row['Phone']; ?>" class="box">
-                    <input type="submit" value="update user" name="update_user" class="btn">
-                    <a href="users.php" class="btn">Go Back</a>
-                </form>
-            <?php }; ?>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
         </div>
-    </div>
 
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($user['Phone']); ?>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address</label>
+            <textarea id="address" name="address" rows="4" required><?php echo htmlspecialchars($user['address']); ?></textarea>
+        </div>
+
+        <button type="submit" name="update" class="btn">Update</button>
+        <a href="users.php" class="btn btn-danger">Cancel</a>
+    </form>
+</div>
 </body>
-
 </html>
