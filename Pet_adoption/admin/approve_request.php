@@ -1,27 +1,29 @@
 <?php
 include 'config.php';
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+$agreement_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
-    // Update request status to 'Approved'
-    $stmt = $conn->prepare("UPDATE agreement_form SET status = 'Approved' WHERE user_id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
+if ($agreement_id) {
+    // Update the status to 'Approved'
+    $stmt = $conn->prepare("UPDATE agreement_form SET status = 'Approved' WHERE agreement_id = ?");
+    $stmt->bind_param("i", $agreement_id);
 
-    // Send confirmation email to user
-    $query = $conn->prepare("SELECT email FROM agreement_form WHERE user_id = ?");
-    $query->bind_param("i", $id);
-    $query->execute();
-    $result = $query->get_result();
-    $email = $result->fetch_assoc()['email'];
+    if ($stmt->execute()) {
+        // Insert a message into the message table
+        $message = "Please visit the shelter for further details.";
+        $msg_stmt = $conn->prepare("INSERT INTO agreement_form (agreement_id, message) VALUES (?, ?)");
+        $msg_stmt->bind_param("is", $agreement_id, $message);
+        $msg_stmt->execute();
 
-    $subject = "Adoption Request Approved";
-    $message = "Dear " . $email . ", your adoption request has been approved. Please contact us for further instructions.";
-    $headers = "From: susilnamecool@gmail.com";
+        echo "<script>alert('Request approved successfully.');</script>";
+    } else {
+        echo "Error approving request: " . $conn->error;
+    }
 
-    mail($email, $subject, $message, $headers);
-
-    header("Location: admin_page.php");
-    exit();
+    $stmt->close();
+    $msg_stmt->close();
 }
+
+header("Location: request.php");
+exit();
+?>

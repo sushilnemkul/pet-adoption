@@ -78,30 +78,28 @@ if (isset($_POST["login"])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    // Check both admin and user tables for the email
-  
+    // Check if the email exists and fetch user details
     $userQuery = "SELECT * FROM users WHERE email = '$email'";
-
-
-  
     $userResult = mysqli_query($conn, $userQuery);
-    
 
-   if (mysqli_num_rows($userResult) > 0) {
+    if (mysqli_num_rows($userResult) > 0) {
         $row = mysqli_fetch_array($userResult);
-        // Verify the password
-        if (password_verify($password, $row['password'])) {
-            // After successful login
-$_SESSION['user'] = "true";
-$_SESSION['user_id'] = $user_id; // Assuming $user_id is the ID of the logged-in user
-            $_SESSION['user_id'] = $row['ID']; 
-          
-            
-          
-            header("Location: indexx.php");
-            exit();
+
+        // Check if the user is active
+        if ($row['status'] === 'active') {
+            // Verify the password
+            if (password_verify($password, $row['password'])) {
+                // Successful login for an active user
+                $_SESSION['user'] = "true";
+                $_SESSION['user_id'] = $row['ID']; // Store user ID in session
+                
+                header("Location: indexx.php");
+                exit();
+            } else {
+                echo "<script>alert('Invalid password.');window.location.href = 'Login.php';</script>";
+            }
         } else {
-            echo "<script>alert('Invalid password for user account.');window.location.href = 'Login.php';</script>";
+            echo "<script>alert('Your account is not active. Please contact support.');window.location.href = 'Login.php';</script>";
         }
     } else {
         echo "<script>alert('No account found with that email.');window.location.href = 'Login.php';</script>";
@@ -113,11 +111,11 @@ $_SESSION['user_id'] = $user_id; // Assuming $user_id is the ID of the logged-in
     <h1>Login</h1>
     <form action="Login.php" method="post">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email">
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
         <span id="error_email"></span>
 
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" placeholder="Enter your password">
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
         <span id="error_password"></span>
 
         <input type="submit" value="Login" name="login" id="login">
@@ -127,3 +125,4 @@ $_SESSION['user_id'] = $user_id; // Assuming $user_id is the ID of the logged-in
         Don't have an account? <a href="signup.php">Sign Up</a>
     </div>
 </div>
+

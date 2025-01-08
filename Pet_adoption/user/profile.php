@@ -184,7 +184,7 @@ $user_id = $_SESSION['user_id'];
 
 // Fetch adoption requests made by the user
 $query = $conn->prepare("
-    SELECT af.user_id, af.application_date, af.documents, p.pet_name AS pet_name, p.pet_breed, p.pet_age, p.image, af.status 
+    SELECT af.user_id, af.application_date, af.documents, p.pet_name AS pet_name, p.pet_breed, p.pet_age, p.image, af.status, af.message 
     FROM agreement_form af 
     INNER JOIN pets p ON af.pet_id = p.pet_id 
     WHERE af.user_id = ?
@@ -322,9 +322,10 @@ $result = $query->get_result();
                                 <?php if ($row['status'] === 'pending'): ?>
                                     <a href="cancel_request.php?id=<?= $row['user_id'] ?>" class="btn-cancel">Cancel</a>
                                 <?php else: ?>
-                                    ---
+                                    <a href="delete_request.php?id=<?= $row['user_id'] ?>">Delete</a>
                                 <?php endif; ?>
                             </td>
+                            <td><?= htmlspecialchars($row['message']) ?></td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
@@ -336,3 +337,23 @@ $result = $query->get_result();
     <?php include 'footer.php'; ?>
 </body>
 </html>
+<?php
+include 'database.php';
+
+
+// Validate user session
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+// Fetch only non-deleted requests
+$stmt = $conn->prepare("SELECT * FROM agreement_form WHERE user_id = ? AND is_deleted = FALSE");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+?>
+
+

@@ -16,74 +16,111 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f7e7ce;
-        }
+        /* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f7e7ce; /* Beige background */
+}
 
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-        }
+/* Header Section */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-        .header h1 {
-            font-size: 24px;
-            margin: 0;
-        }
+.header h1 {
+    font-size: 24px;
+    margin: 0;
+}
 
-        .nav {
-            display: flex;
-            gap: 20px;
-        }
+/* Navigation Links */
+.nav {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
 
-        .nav a {
-            text-decoration: none;
-            color: white;
-            font-size: 16px;
-        }
+.nav a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: color 0.2s ease;
+}
 
-        .nav a:hover {
-            text-decoration: underline;
-        }
+.nav a:hover {
+    color: #c8f0c8; /* Lighter green on hover */
+}
 
-        .sidebar {
-            width: 200px;
-            background-color: #fae6d1;
-            position: fixed;
-            top: 50px;
-            bottom: 0;
-            left: 0;
-            padding: 20px;
-        }
+/* Sidebar Styles */
+.sidebar {
+    width: 200px;
+    background-color: #fae6d1; /* Light beige */
+    position: fixed;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
 
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-        .sidebar ul li {
-            margin-bottom: 15px;
-        }
+.sidebar ul li {
+    margin-bottom: 15px;
+}
 
-        .sidebar ul li a {
-            text-decoration: none;
-            color: black;
-            font-size: 16px;
-        }
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333; /* Dark text */
+    font-size: 16px;
+    transition: color 0.2s ease;
+}
 
-        .sidebar ul li a:hover {
-            color: #4CAF50;
-        }
+.sidebar ul li a:hover {
+    color: #4CAF50; /* Green on hover */
+}
 
-        .content {
-            margin-left: 220px;
-            padding: 20px;
-        }
+/* Content Section */
+.content {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: static;
+        box-shadow: none;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+}
+
     </style>
 </head>
 <body>

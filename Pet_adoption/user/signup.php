@@ -33,7 +33,8 @@
             border-radius: 10px;
             max-width: 400px;
             width: 100%;
-            
+            margin-top: 480px;
+            margin-bottom: 60px;
 
         }
 
@@ -198,7 +199,7 @@ I
         $conn->close();
     }
     ?>
-</div>
+
 
     <form action="signup.php" method="post" id="adoptionForm">
         <label for="name">Full Name</label>
@@ -226,6 +227,6 @@ I
         Already have an account? <a href="login.php">Login</a>
     </div>
 </div>
-
-
+</div>
+<?php include 'footer.php'; ?> 
 

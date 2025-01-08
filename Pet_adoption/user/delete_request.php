@@ -12,12 +12,12 @@ $user_id = $_SESSION['user_id'];
 $request_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
 if ($request_id) {
-    // Permanently delete the request
-    $stmt = $conn->prepare("DELETE FROM agreement_form WHERE agreement_id = ? AND user_id = ?");
+    // Soft delete: mark as deleted only for the user's view
+    $stmt = $conn->prepare("UPDATE agreement_form SET is_deleted = TRUE WHERE agreement_id = ? AND user_id = ?");
     $stmt->bind_param("ii", $request_id, $user_id);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Request successfully canceled and deleted.'); window.location.href = 'profile.php';</script>";
+        echo "<script>alert('Request successfully removed from your history.'); window.location.href = 'profile.php';</script>";
     } else {
         echo "<script>alert('Error deleting request: " . $conn->error . "'); window.location.href = 'profile.php';</script>";
     }
