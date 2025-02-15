@@ -10,7 +10,7 @@ if ($agreement_id) {
 
     if ($stmt->execute()) {
         // Insert a message into the message table
-        $message = "Please visit the shelter for further details.";
+        $message = "Please visit the shelter within 4 days for further proceedings.";
         $msg_stmt = $conn->prepare("INSERT INTO agreement_form (agreement_id, message) VALUES (?, ?)");
         $msg_stmt->bind_param("is", $agreement_id, $message);
         $msg_stmt->execute();

@@ -1,18 +1,14 @@
-<?php include 'header.php';?>
+<?php include 'header.php'; ?>
 
 <?php
 // Start session
-
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-
 // Include database connection
 include 'database.php';
-
-
 
 // Fetch user data
 $user_id = $_SESSION['user_id'];
@@ -21,8 +17,6 @@ $user_query->bind_param("i", $user_id);
 $user_query->execute();
 $user_result = $user_query->get_result();
 $user_data = $user_result->fetch_assoc();
-
-
 
 // Fetch pet ID from the URL
 $pet_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -44,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $phone = $conn->real_escape_string($_POST['phone']);
     $occupation = $conn->real_escape_string($_POST['occupation']);
     $previous_pets = $conn->real_escape_string($_POST['previous_pets']);
-    
 
     // Handle file upload
     $document = $_FILES['document']['name'];
@@ -68,15 +61,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $previous_pets,
             $pet_id,
             $user_id,
-            
             $unique_name
-            
         );
 
         if ($stmt->execute()) {
-            echo "<script>alert('Form submitted successfully!');</script>";
-            header("Location: profile.php");
-            exit();
+            // Update the pet_status to 'pending'
+            $update_status = $conn->prepare("UPDATE pets SET pet_status = 'pending' WHERE pet_id = ?");
+            $update_status->bind_param("i", $pet_id);
+            if ($update_status->execute()) {
+                echo "<script>alert('Form submitted successfully, and pet status updated to pending!');</script>";
+                header("Location: profile.php");
+                exit();
+            } else {
+                echo "Error updating pet status: " . $conn->error;
+            }
         } else {
             echo "Database Error: " . $conn->error;
         }
@@ -84,39 +82,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Failed to upload the document. Error: " . $_FILES['document']['error'];
     }
 }
-$allowed_types = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
-if (in_array($_FILES['document']['type'], $allowed_types) && $_FILES['document']['size'] <= 2 * 1024 * 1024) {
-    // Proceed with file upload
-} else {
-    echo "Invalid file type or file size exceeds limit.";
-}
-
-
 ?>
 
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adoption Application Form</title>
+</head>
 <body>
     <div class="body">
         <h2>Adoption Application Form</h2>
         <div class="form">
             <form action="aagreementform.php?id=<?= htmlspecialchars($pet_id) ?>" method="post" enctype="multipart/form-data">
-            <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="<?= htmlspecialchars($user_data['name']) ?>" readonly>
-    </div>
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="<?= htmlspecialchars($user_data['email']) ?>" readonly>
-    </div>
-    <div>
-        <label for="address">Address:</label>
-        <input type="text" id="address" name="address" value="<?= htmlspecialchars($user_data['address']) ?>" readonly>
-    </div>
-    <div>
-        <label for="phone">Phone:</label>
-        <input type="tel" id="phone" name="phone" value="<?= htmlspecialchars($user_data['Phone']) ?>" readonly>
-    </div>
-
+                <div>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" value="<?= htmlspecialchars($user_data['name']) ?>" readonly>
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="<?= htmlspecialchars($user_data['email']) ?>" readonly>
+                </div>
+                <div>
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" value="<?= htmlspecialchars($user_data['address']) ?>" readonly>
+                </div>
+                <div>
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" value="<?= htmlspecialchars($user_data['Phone']) ?>" readonly>
+                </div>
                 <label for="occupation">Occupation:</label>
                 <input type="text" id="occupation" name="occupation" placeholder="Enter your occupation" required>
 
@@ -125,8 +120,6 @@ if (in_array($_FILES['document']['type'], $allowed_types) && $_FILES['document']
 
                 <label for="Pet_ID">Pet ID:</label>
                 <input type="text" id="Pet_ID" name="Pet_ID" value="<?= htmlspecialchars($pet_id); ?>" readonly>
-
-              
 
                 <label for="document">Document (citizenship, passport, etc.):</label>
                 <input type="file" id="document" name="document" accept="image/png, image/jpeg, image/jpg, image/webp" required>
@@ -154,12 +147,11 @@ if (in_array($_FILES['document']['type'], $allowed_types) && $_FILES['document']
             const dropdown = document.getElementById("termsDropdown");
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
         }
-    
     </script>
-    
-
 </body>
 </html>
+
+
 
 
 

@@ -61,7 +61,7 @@ $requests_result = $requests_query->get_result();
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f4f8;
+            background-color: #f7e7ce;
             margin: 0;
             padding: 0;
         }
@@ -338,22 +338,17 @@ $result = $query->get_result();
 </body>
 </html>
 <?php
-include 'database.php';
 
 
-// Validate user session
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
 
-$user_id = $_SESSION['user_id'];
 
-// Fetch only non-deleted requests
-$stmt = $conn->prepare("SELECT * FROM agreement_form WHERE user_id = ? AND is_deleted = FALSE");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-?>
+// $user_id = $_SESSION['user_id'];
+
+// // Fetch only non-deleted requests
+// $stmt = $conn->prepare("SELECT * FROM agreement_form WHERE user_id = ? AND is_deleted = FALSE");
+// $stmt->bind_param("i", $user_id);
+// $stmt->execute();
+// $result = $stmt->get_result();
+// ?>
 
 

@@ -122,6 +122,7 @@ if (isset($_POST["login"])) {
     </form>
 
     <div class="signup-link">
+        <a href="forgot_password.php">Forgot Password?</a><br><br>
         Don't have an account? <a href="signup.php">Sign Up</a>
     </div>
 </div>

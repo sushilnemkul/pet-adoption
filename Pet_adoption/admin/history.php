@@ -1,10 +1,20 @@
 <?php include 'admin_header.php'; ?>
 <?php
+
+//session_start();
+
+if(!isset($_SESSION['admin'])){
+    header("Location: adminlogin.php");//redirects to login.php if not logged in
+    exit();
+  }
+
+
 include 'config.php';
 
 // Fetch all requests including those marked as deleted
 $history = $conn->query("SELECT * FROM agreement_form ORDER BY application_date DESC");
 ?>
+<br><br>
 <h1>Request History</h1>
 <table border="1">
     <tr>

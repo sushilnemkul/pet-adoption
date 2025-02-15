@@ -1,6 +1,15 @@
 <?php include 'admin_header.php'; ?>
 
 <?php
+
+//session_start();
+
+if(!isset($_SESSION['admin'])){
+    header("Location: adminlogin.php");//redirects to login.php if not logged in
+    exit();
+  }
+
+
 // Include database connection
 include 'config.php';
 
@@ -81,7 +90,8 @@ $result = mysqli_query($conn, $sql);
             padding: 0;
         }
         h1 {
-            margin: 20px 0;
+            margin: 20px 20px;
+            margin-top: 70px;
         }
         .card-container {
             display: flex;

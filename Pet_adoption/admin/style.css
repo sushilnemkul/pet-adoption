@@ -175,7 +175,7 @@ font-size: 2.5rem;
 
 .pet_display{
     margin: 2rem 0;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
  
 }
 
@@ -257,7 +257,13 @@ background: crimson;
    
 
 
-    
+    h1{
+        font-size: 3.5rem;
+        color: #00f0b0;
+        text-align: center;
+        margin-top: 30px;
+
+    }
 
 
 

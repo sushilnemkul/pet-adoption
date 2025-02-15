@@ -4,10 +4,10 @@
 // session_start();
 
 // Check if the user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: Login.php"); // Redirect to login.php if not logged in
-    exit();
-}
+// if (!isset($_SESSION['user_id'])) {
+//     header("Location: Login.php"); // Redirect to login.php if not logged in
+//     exit();
+// }
 
 // Include necessary files
 
@@ -24,7 +24,7 @@ if (isset($_POST['search']) && !empty($_POST['pet_search'])) {
         OR pet_gender like '%$searchTerm%'
         OR pet_desc like '%$searchTerm%'";
 } else {
-    $sql = "SELECT * FROM pets";
+    $sql = "SELECT * FROM pets where pet_status IN ('available', 'pending') ORDER BY pet_id DESC";
 }
 
 $result = mysqli_query($conn, $sql);

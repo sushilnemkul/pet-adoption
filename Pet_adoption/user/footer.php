@@ -25,6 +25,7 @@ footer {
     color: #333;
     text-align: center;
     font-family: Arial, sans-serif;
+    position : bottom;
 }
 
 .footer-container {

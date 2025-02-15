@@ -1,16 +1,16 @@
 <?php include 'admin_header.php'; ?>
 <?php
-// session_start();
+//session_start();
 
-// if(!isset($_SESSION['admin'])){
-//     header("Location: adminlogin.php");//redirects to login.php if not logged in
-//     exit();
-//   }
+if(!isset($_SESSION['admin'])){
+    header("Location: adminlogin.php");//redirects to login.php if not logged in
+    exit();
+  }
 
 ?>
 <?php
 
-@include 'config.php';
+include 'config.php';
 
 if(isset($_POST['add_pet'])) {
     $pet_name = $_POST['pet_name'];
@@ -50,25 +50,27 @@ if (isset($_GET['delete'])) {
 
     // Show the confirmation message with Yes and No buttons
     echo "
-    <div style='text-align: center; margin-top: 50px;'>
-        <h3>Are you sure you want to delete this pet?</h3>
-        <a href='admin_page.php?confirm_delete=$id' style='padding: 10px 20px; background-color: red; color: white; text-decoration: none; border-radius: 5px;'>Yes</a>
-        <a href='admin_page.php' style='padding: 10px 20px; background-color: green; color: white; text-decoration: none; border-radius: 5px;'>No</a>
-    </div>";
+    <script>
+        var confirmDelete = confirm('Are you sure you want to delete this pet?');
+        if (confirmDelete) {
+            window.location.href = 'admin_page.php?confirm_delete=$id';
+        }
+    </script>
+    ";
     exit(); // Stop further script execution to show the confirmation page
 }
-
-// Handle the confirmed deletion
 if (isset($_GET['confirm_delete'])) {
     $id = $_GET['confirm_delete'];
-
-    // Execute the deletion query
-    mysqli_query($conn, "DELETE FROM pets WHERE pet_id = '$id'");
-
-    // Redirect back to the admin page
-    header('Location: admin_page.php');
-    exit();
+    $delete = "DELETE FROM pets WHERE pet_id = '$id'";
+    $result = mysqli_query($conn, $delete);
+    if ($result) {
+        $message[] = '<script>alert("Pet deleted successfully")</script>';
+    } else {
+        $message[] = '<script>alert("Failed to delete pet")</script>';
+    }
 }
+
+
 
 
 
@@ -116,7 +118,7 @@ if(isset($message)){
             </form>
         </div>
         <?php
-        $select = mysqli_query($conn, "SELECT * FROM pets ORDER BY pet_id DESC");
+        $select = mysqli_query($conn, "SELECT * FROM pets where pet_status = 'available' ORDER BY pet_id DESC");
 
        
         
@@ -124,9 +126,11 @@ if(isset($message)){
         ?>
 
             <div class="pet_display">
+                <h1>Available Pets</h1>
                 <table class="pet_table">
                     <thead>
                         <tr>
+                        <th>Pet ID</th>
                          <th>Name</th>
                          <th>Age</th>
                          <th>Breed</th>
@@ -141,6 +145,7 @@ if(isset($message)){
                     while($row = mysqli_fetch_assoc($select)){
                     ?>
                      <tr>
+                           <td><?php echo $row['pet_id']; ?></td>
                            <td><?php echo $row['pet_name']; ?></td>
                            <td><?php echo $row['pet_age']; ?></td>
                            <td><?php echo $row['pet_breed']; ?></td>
@@ -165,7 +170,102 @@ if(isset($message)){
 
                     <?php }; ?>
                 </table>
-                <button> <a href="logout.php">Logout</a></button>
+               
+                <h1>Adopted Pets</h1>
+                <?php
+        $select = mysqli_query($conn, "SELECT * FROM pets where pet_status = 'adopted' ORDER BY pet_id DESC");
+        ?>
+                <table class="pet_table">
+                    <thead>
+                        <tr>
+                        <th>Pet ID</th>
+                         <th>Name</th>
+                         <th>Age</th>
+                         <th>Breed</th>
+                         <th>Gender</th>
+                         <th>Description</th>
+                         <th>Image</th>
+                         <th>Status</th>
+                         <th>Action</th>
+                        </tr>
+                    </thead>
+                    <?php
+                    while($row = mysqli_fetch_assoc($select)){
+                    ?>
+                     <tr>
+                           <td><?php echo $row['pet_id']; ?></td>
+                           <td><?php echo $row['pet_name']; ?></td>
+                           <td><?php echo $row['pet_age']; ?></td>
+                           <td><?php echo $row['pet_breed']; ?></td>
+                           <td><?php echo $row['pet_gender']; ?></td>
+
+                           <td><?php echo $row['pet_desc']; ?></td>
+                           
+                           <td><img src="uploaded_img/<?php echo $row['image']; ?>" alt="" width="100" height="100"></td>
+                           <td><?php echo $row['pet_status']; ?></td>
+                           <td>
+    <!-- Edit button -->
+    <a href="admin_update.php?edit=<?php echo $row['pet_id']; ?>" class="btn">
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit
+    </a>
+    <!-- Delete button -->
+    <a href="admin_page.php?delete=<?php echo $row['pet_id']; ?>" class="btn">
+        <i class="fa fa-trash-o" aria-hidden="true"></i>Delete
+    </a>
+</td>
+
+                        </tr>
+
+                    <?php }; ?>
+                </table>    
+
+                <h1>Pending Pets</h1>
+                <?php
+        $select = mysqli_query($conn, "SELECT * FROM pets where pet_status = 'pending' ORDER BY pet_id DESC");
+        ?>
+                <table class="pet_table">
+                    <thead>
+                        <tr>
+                        <th>Pet ID</th>
+                         <th>Name</th>
+                         <th>Age</th>
+                         <th>Breed</th>
+                         <th>Gender</th>
+                         <th>Description</th>
+                         <th>Image</th>
+                         <th>Status</th>
+                         <th>Action</th>
+                        </tr>
+                    </thead>
+                    <?php
+                    while($row = mysqli_fetch_assoc($select)){
+                    ?>
+                     <tr>
+                           <td><?php echo $row['pet_id']; ?></td>
+                           <td><?php echo $row['pet_name']; ?></td>
+                           <td><?php echo $row['pet_age']; ?></td>
+                           <td><?php echo $row['pet_breed']; ?></td>
+                           <td><?php echo $row['pet_gender']; ?></td>
+
+                           <td><?php echo $row['pet_desc']; ?></td>
+                           
+                           <td><img src="uploaded_img/<?php echo $row['image']; ?>" alt="" width="100" height="100"></td>
+                           <td><?php echo $row['pet_status']; ?></td>
+                           <td>
+    <!-- Edit button -->
+    <a href="admin_update.php?edit=<?php echo $row['pet_id']; ?>" class="btn">
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit
+    </a>
+    <!-- Delete button -->
+    <a href="admin_page.php?delete=<?php echo $row['pet_id']; ?>" class="btn">
+        <i class="fa fa-trash-o" aria-hidden="true"></i>Delete
+    </a>
+</td>
+
+                        </tr>
+
+                    <?php }; ?>
+                </table>
             </div>
     </div>
    

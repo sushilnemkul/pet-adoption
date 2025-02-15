@@ -1,6 +1,14 @@
 <?php include 'admin_header.php'; ?>
 <?php
 
+//session_start();
+
+if(!isset($_SESSION['admin'])){
+    header("Location: adminlogin.php");//redirects to login.php if not logged in
+    exit();
+  }
+
+
 include 'config.php';
 
 // Handle admin actions (approve/reject) before any output
@@ -11,7 +19,7 @@ if (isset($_GET['action'], $_GET['id']) && in_array($_GET['action'], ['approve',
     if ($agreement_id) {
         if ($action === 'approve') {
             $status = 'Approved';
-            $message = 'Please visit the shelter for further details.';
+            $message = 'Please visit the shelter within 4 days for further proceedings.';
         } else {
             $status = 'Rejected';
             $message = 'Submit proper documents.';
@@ -38,6 +46,7 @@ if (isset($_GET['action'], $_GET['id']) && in_array($_GET['action'], ['approve',
 // Fetch all adoption requests
 $requests = $conn->query("SELECT * FROM agreement_form WHERE status = 'Pending'");
 ?>
+<br><br>
 <h1>Adoption Requests</h1>
 <table border="1">
     <tr>
@@ -47,6 +56,9 @@ $requests = $conn->query("SELECT * FROM agreement_form WHERE status = 'Pending'"
         <th>Address</th>
         <th>Phone</th>
         <th>Pet ID</th>
+        <th>application_date</th>
+        <th>occupation</th>
+        <th>previous_pets</th>
         <th>Documents</th>
         <th>Status</th>
         <th>Actions</th>
@@ -59,6 +71,9 @@ $requests = $conn->query("SELECT * FROM agreement_form WHERE status = 'Pending'"
         <td><?= htmlspecialchars($row['address']) ?></td>
         <td><?= htmlspecialchars($row['phone']) ?></td>
         <td><?= htmlspecialchars($row['pet_id']) ?></td>
+        <td><?= htmlspecialchars($row['application_date']) ?></td>
+        <td><?= htmlspecialchars($row['occupation']) ?></td>
+        <td><?= htmlspecialchars($row['previous_pets']) ?></td>
         <td>
             <a href="img1/<?= htmlspecialchars($row['documents']) ?>" target="_blank">View Documents</a>
         </td>
@@ -81,6 +96,9 @@ $requests = $conn->query("SELECT * FROM agreement_form WHERE status = 'Pending'"
         <th>Address</th>
         <th>Phone</th>
         <th>Pet ID</th>
+        <th>application_date</th>
+        <th>occupation</th>
+        <th>previous_pets</th>
         <th>Documents</th>
         <th>Status</th>
     </tr>
@@ -94,6 +112,9 @@ $requests = $conn->query("SELECT * FROM agreement_form WHERE status = 'Pending'"
         <td><?= htmlspecialchars($row['address']) ?></td>
         <td><?= htmlspecialchars($row['phone']) ?></td>
         <td><?= htmlspecialchars($row['pet_id']) ?></td>
+        <td><?= htmlspecialchars($row['application_date']) ?></td>
+        <td><?= htmlspecialchars($row['occupation']) ?></td>
+        <td><?= htmlspecialchars($row['previous_pets']) ?></td>
         <td>
             <a href="img1/<?= htmlspecialchars($row['documents']) ?>" target="_blank">View Documents</a>
         </td>
@@ -111,6 +132,9 @@ $requests = $conn->query("SELECT * FROM agreement_form WHERE status = 'Pending'"
         <th>Address</th>
         <th>Phone</th>
         <th>Pet ID</th>
+        <th>application_date</th>
+        <th>occupation</th>
+        <th>previous_pets</th>
         <th>Documents</th>
         <th>Status</th>
     </tr>
@@ -124,6 +148,9 @@ $requests = $conn->query("SELECT * FROM agreement_form WHERE status = 'Pending'"
         <td><?= htmlspecialchars($row['address']) ?></td>
         <td><?= htmlspecialchars($row['phone']) ?></td>
         <td><?= htmlspecialchars($row['pet_id']) ?></td>
+        <td><?= htmlspecialchars($row['application_date']) ?></td>
+        <td><?= htmlspecialchars($row['occupation']) ?></td>
+        <td><?= htmlspecialchars($row['previous_pets']) ?></td>
         <td>
             <a href="img1/<?= htmlspecialchars($row['documents']) ?>" target="_blank">View Documents</a>
         </td>
@@ -135,7 +162,7 @@ $requests = $conn->query("SELECT * FROM agreement_form WHERE status = 'Pending'"
    /* General Page Styles */
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
+    margin: 10px;
     background-color: #f5f5dc; /* Beige background */
     color: #333;
 }
@@ -153,7 +180,8 @@ table {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     border-radius: 8px;
-    overflow: hidden;
+    overflow-y: 200px;
+  
 }
 
 table th,

@@ -2,11 +2,7 @@
 // Start session
 session_start();
 
-// Check if the admin is logged in
-// if (!isset($_SESSION['admin_logged_in'])) {
-//     header('Location: login.php'); // Redirect to login page if not logged in
-//     exit;
-// }
+
 ?>
 
 <!DOCTYPE html>
@@ -32,6 +28,11 @@ body {
     color: white;
     padding: 10px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
 }
 
 .header h1 {

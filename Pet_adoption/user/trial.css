@@ -179,6 +179,11 @@ border-radius: 20px;
  display: inline-block;
 margin-bottom: 100px;
 }
+image{
+  width: 100%;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
 .cards:hover{
   transform: scale(1.1);
   box-shadow: 2px 2px 20px black;

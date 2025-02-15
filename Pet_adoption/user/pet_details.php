@@ -1,4 +1,9 @@
 <?php
+session_start();
+$isLoggedIn = isset($_SESSION['user_id']);
+
+?>
+<?php
 include 'header.php';
 include 'database.php';
 
@@ -24,6 +29,7 @@ if (mysqli_num_rows($result) > 0) {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,7 +55,8 @@ if (mysqli_num_rows($result) > 0) {
                 <p><strong>Gender:</strong> <?php echo $data['pet_gender']; ?></p>
                 <p><strong>Description:</strong> <?php echo $data['pet_desc']; ?></p>
                 <p><strong>Status:</strong> <?php echo $data['status']; ?></p>
-                <a href="aagreementform.php?id=<?php echo $data['pet_id']; ?>" class="adopt">Adopt</a>
+
+                <a href="<?php echo $isLoggedIn ? 'aagreementform.php?id=' . htmlspecialchars($data['pet_id']) : 'login.php'; ?>"class="adopt">Adopt</a>
                 <a href="pets.php" class="back-link"><i class="">   Back</i></a>
                 
             </div>
